@@ -1,0 +1,4 @@
+[submodule "themes/yun"]
+	path = themes/yun
+	url = https://github.com/atomicoo/hexo-theme-yun.git
+	branch = master

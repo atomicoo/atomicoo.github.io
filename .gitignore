@@ -1,0 +1,18 @@
+# custom
+.DS_Store
+Thumbs.db
+temp/
+yarn.lock
+package-lock.json
+
+# dev
+node_modules/
+*.log
+
+# dist
+public/
+db.json
+.deploy*/
+themes/landscape/
+hexo_deploy_rsa
+hexo_deploy_rsa.pub

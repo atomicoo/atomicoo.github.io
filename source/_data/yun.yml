@@ -1,0 +1,157 @@
+mode: auto
+
+avatar:
+  url: /images/avatar.jpg
+
+reward_settings:
+  enable: true
+  comment: 此路是我开，留下买路财 [ 狗头 ]
+
+reward:
+  - name: 支付宝
+    path: /images/alipay.jpg
+    color: "#00A3EE"
+    icon: icon-alipay-line
+  - name: QQ 支付
+    path: /images/qq-pay.jpg
+    color: "#12B7F5"
+    icon: icon-qq-line
+  - name: 微信支付
+    path: /images/wechat-pay.jpg
+    color: "#2DC100"
+    icon: icon-wechat-pay-line
+
+comment:
+  tips:
+    - 重要评论建议跳转 GitHub Issues 发布
+
+valine:
+  enable: true
+  appId: frjzlYEWNDPLkxagtOz0FWFe-9Nh9j0Va # your leancloud application appid
+  appKey: gK2710zgTWTS3C6UchnWhQHd # your leancloud application appkey
+  # https://github.com/DesertsP/Valine-Admin
+  # https://valine.atomicoo.com
+  placeholder: 大佬求指教&nbsp_(:з」∠)_ （填写邮箱可以收到回复通知～）
+  visitor: true
+  recordIP: true
+  enableQQ: true
+  requiredFields:
+    - nick
+    - mail
+
+github_issues:
+  username: atomicoo
+  repository: atomicoo.github.io
+
+footer:
+  since: 2020
+  beian:
+    enable: true
+    icp: 苏ICP备********号
+  # ...
+
+social:
+  - name: QQ
+    link: https://wpa.qq.com/msgrd?v=3&uin=793071559&site=qq&menu=yes
+    icon: icon-qq-line
+    color: "#12B7F5"
+  - name: GitHub
+    link: https://github.com/atomicoo
+    icon: icon-github-line
+    color: "#6e5494"
+  - name: 哔哩哔哩
+    link: https://space.bilibili.com/409646386
+    icon: icon-bilibili-line
+    color: "#FF8EB3"
+  - name: E-Mail
+    link: mailto:atomicoo95@gmail.com
+    icon: icon-mail-line
+    color: "#8E71C1"
+
+engine_search:
+  enable: false
+
+# If you want to use it, you need config algolia appID in _config.yml!!!
+# https://github.com/oncletom/hexo-algolia
+algolia_search:
+  enable: true
+  # ...
+
+# google_adsense:
+  # enable: true
+  # client: ca-pub-2245427233262012
+
+google_analytics:
+  enable: true
+  id: UA-170889853-1
+
+post_edit:
+  enable: true
+  url: https://github.com/atomicoo/atomicoo.github.io/tree/source/source/
+
+albums:
+  enable: true
+
+girls:
+  enable: true
+
+tags:
+  动画: crimson
+  漫画: orange
+  学习: saddlebrown
+  教程: royalblue
+  笔记: dimgray
+  分享: blue
+  随笔: mediumpurple
+  Blender: "#d04d2d"
+  Linux: "#2577b1"
+  科幻: midnightblue
+
+# wordcloud:
+  # enable: true
+
+categories:
+  一点痕迹: "#FB7299"
+
+pages:
+  - name: 友链
+    url: /links/
+    icon: icon-genderless-line
+    color: dodgerblue
+  - name: 女孩
+    url: /girls/
+    icon: icon-women-line
+    color: hotpink
+
+# cdn:
+#   pre: https://cdn.jsdelivr.net/gh/YunYouJun/yunyoujun.github.io@latest
+
+menu:
+  custom:
+    title: 留言板
+    path: /about/#comment
+    icon: icon-clipboard-line
+
+banner:
+  title: 原子态的个人站
+
+cursor:
+  enable: true
+
+baidu_push: true
+
+google_tagmanager:
+  enable: true
+  id: GTM-M9KWR9L
+
+bg_image:
+  # url:
+  dark: /images/galaxy.jpg
+
+sidebar:
+  bg_image: /images/stars-timing-1.jpg
+  # dark_bg_image:
+
+search:
+  # bg_image:
+  dark_bg_image: /images/mountain-blur-30px.jpg
