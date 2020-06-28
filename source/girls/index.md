@@ -16,15 +16,15 @@ girls:
     from: 大话西游
     url: https://baike.baidu.com/item/%E6%9C%B1%E8%8C%B5/10617
   - name: 李子柒
-    avatar: https://bkimg.cdn.bcebos.com/pic/8ad4b31c8701a18b87d61f375d67100828381f305038?x-bce-process=image/resize,m_lfit,w_268,limit_1/format,f_jpg
+    avatar: /images/girls-liziqi.jpg
     from: 子柒文化
     url: https://baike.baidu.com/item/%E6%9D%8E%E5%AD%90%E6%9F%92/22373329
   - name: 霉霉
-    avatar: https://bkimg.cdn.bcebos.com/pic/0eb30f2442a7d933c895584cea02c61373f08202abf1?x-bce-process=image/resize,m_fill,w_200,h_200,align_50
+    avatar: /images/girls-meimei.jpg
     from: 环球唱片
     url: https://baike.baidu.com/item/%E6%B3%B0%E5%8B%92%C2%B7%E6%96%AF%E5%A8%81%E5%A4%AB%E7%89%B9/8472307
   - name: 丁霞
-    avatar: https://bkimg.cdn.bcebos.com/pic/e824b899a9014c08af4653fd057b02087bf4f46d?x-bce-process=image/resize,m_lfit,w_268,limit_1/format,f_jpg
+    avatar: /images/girls-dingxia.jpg
     from: 中国女排
     url: https://baike.baidu.com/item/%E4%B8%81%E9%9C%9E/1997748
   - name: 李珊蓝
@@ -38,9 +38,17 @@ girls:
     avatar: https://img.moegirl.org/common/thumb/8/87/%E9%9B%8F%E7%94%B0_.jpg/280px-%E9%9B%8F%E7%94%B0_.jpg
     from: 火影忍者
     url: https://mzh.moegirl.org/%E6%97%A5%E5%90%91%E9%9B%8F%E7%94%B0
+  - name: 灰原哀
+    avatar: https://img.moegirl.org/common/thumb/a/a7/Haibara_Ai.jpg/223px-Haibara_Ai.jpg
+    from: 名侦探柯南
+    url: https://mzh.moegirl.org/%E7%81%B0%E5%8E%9F%E5%93%80
   - name: 洛天依
     avatar: https://img.moegirl.org/common/thumb/3/38/Carton-new0.png/280px-Carton-new0.png
     from: Vsinger
     url: https://mzh.moegirl.org/%E6%B4%9B%E5%A4%A9%E4%BE%9D
 ---
 
+## 原则
+
+- 没有原则，只要有某个独特的点吸引到我
+- 非要说的话，我对短发的女生缺乏抵抗力

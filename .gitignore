@@ -16,3 +16,6 @@ db.json
 themes/landscape/
 hexo_deploy_rsa
 hexo_deploy_rsa.pub
+
+# verify
+google-site-verification.txt

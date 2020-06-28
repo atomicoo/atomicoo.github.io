@@ -147,6 +147,10 @@ feed:
 sitemap:
   path: sitemap.xml
 
+# https://github.com/coneycode/hexo-generator-baidu-sitemap
+baidusitemap:
+  path: baidusitemap.xml
+
 # https://github.com/oncletom/hexo-algolia
 algolia:
   applicationID: "KP7IPEQ96T"
