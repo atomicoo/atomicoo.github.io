@@ -140,11 +140,11 @@ banner:
 cursor:
   enable: true
 
-baidu_push: true
+# baidu_push: true
 
-google_tagmanager:
-  enable: true
-  id: GTM-M9KWR9L
+# google_tagmanager:
+#   enable: true
+#   id: GTM-M9KWR9L
 
 bg_image:
   # url:
