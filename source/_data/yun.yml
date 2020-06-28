@@ -24,6 +24,8 @@ reward:
 comment:
   tips:
     - 重要评论建议跳转 GitHub Issues 发布
+    - 每篇文章的首个评论需要先根据 Comment 模板创建相应的 Issue
+    - 避免创建重复的 Issue
 
 valine:
   enable: true
@@ -31,7 +33,7 @@ valine:
   appKey: gK2710zgTWTS3C6UchnWhQHd # your leancloud application appkey
   # https://github.com/DesertsP/Valine-Admin
   # https://valine.atomicoo.com
-  placeholder: 大佬求指教&nbsp_(:з」∠)_ （填写邮箱可以收到回复通知～）
+  placeholder: 大佬们缺捡肥皂的吗？_(:з」∠)_ 
   visitor: true
   recordIP: true
   enableQQ: true
@@ -45,9 +47,9 @@ github_issues:
 
 footer:
   since: 2020
-  beian:
-    enable: true
-    icp: 苏ICP备********号
+  # beian:
+  #   enable: true
+  #   icp: 苏ICP备********号
   # ...
 
 social:
@@ -78,8 +80,8 @@ algolia_search:
   # ...
 
 # google_adsense:
-  # enable: true
-  # client: ca-pub-2245427233262012
+#   enable: true
+#   client: ca-pub-2245427233262012
 
 google_analytics:
   enable: true
@@ -108,7 +110,7 @@ tags:
   科幻: midnightblue
 
 # wordcloud:
-  # enable: true
+#   enable: true
 
 categories:
   一点痕迹: "#FB7299"
