@@ -183,6 +183,16 @@ markdown_it_plus:
       options:
         strict: false
 
+# https://github.com/crimx/hexo-filter-github-emojis
+# githubEmojis:
+#   enable: true
+#   className: github-emoji
+#   unicode: true
+#   styles:
+#     display: inline
+#     vertical-align: middle 
+#   localEmojis:
+
 # https://github.com/hexojs/hexo-server
 server:
   compress: true

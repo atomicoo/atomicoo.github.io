@@ -28,7 +28,7 @@ girls:
     from: 中国女排
     url: https://baike.baidu.com/item/%E4%B8%81%E9%9C%9E/1997748
   - name: 李珊蓝
-    avatar: https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=7d5a4403a0ec08fa220014a569ef3d4d/3bf33a87e950352a4c05c5b45343fbf2b2118b22.jpg
+    avatar: /images/no-avatar.jpg
     from: 孔雀森林
   - name: 宫水三叶
     avatar: https://img.moegirl.org/common/thumb/3/39/59088251_p0.jpg/280px-59088251_p0.jpg
