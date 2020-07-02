@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 原子态的个人站
+title: 薛定谔的原子态
 subtitle: Atomicoo's
 description: “咚！咚！咚！”
 keywords:
@@ -11,7 +11,7 @@ keywords:
   - Blog
   - 原子态
   - 博客
-  - 原子态的个人站
+  - 薛定谔的原子态
   - atomicoo.com
   - www.atomicoo.com
 author: 原子态
@@ -158,49 +158,67 @@ algolia:
   indexName: "my-hexo-blog"
   chunkSize: 5000
 
-# # https://github.com/hexojs/hexo-renderer-marked
-# marked:
-#   gfm: true
-#   pedantic: false
-#   breaks: true
-#   smartLists: true
-#   smartypants: true
-#   modifyAnchors: 0
-#   autolink: true
-#   sanitizeUrl: false
-#   headerIds: true
-#   prependRoot: false
-#   external_link:
-#     enable: false
-#     exclude: []
-#     nofollow: false
+# https://github.com/hexojs/hexo-renderer-marked
+marked:
+  gfm: true
+  pedantic: false
+  breaks: true
+  smartLists: true
+  smartypants: true
+  modifyAnchors: 0
+  autolink: true
+  sanitizeUrl: false
+  headerIds: true
+  prependRoot: false
+  external_link:
+    enable: false
+    exclude: []
+    nofollow: false
+
+markdown_it_plus:
+  plugins:
+    - plugin:
+      name: "@neilsustc/markdown-it-katex"
+      enable: true
+      options:
+        strict: false
+
+# https://github.com/crimx/hexo-filter-github-emojis
+githubEmojis:
+  enable: true
+  className: github-emoji
+  unicode: true
+  styles:
+    display: inline
+    vertical-align: middle 
+  localEmojis:
 
 # Markdown-it config
 ## Docs: https://github.com/celsomiranda/hexo-renderer-markdown-it/wiki
-markdown:
-  render:
-    html: true
-    xhtmlOut: false
-    breaks: true
-    linkify: true
-    typographer: true
-    quotes: '“”‘’'
-  plugins:
-    - markdown-it-abbr
-    - markdown-it-footnote
-    - markdown-it-ins
-    - markdown-it-sub
-    - markdown-it-sup
-    - markdown-it-checkbox
-    - markdown-it-emoji
-    - markdown-it-katex
-  anchors:
-    level: 6
-    collisionSuffix: 'v'
-    permalink: true
-    permalinkClass: header-anchor
-    permalinkSide: 'left'
-    permalinkSymbol: ¶
+# markdown:
+#   render:
+#     html: true
+#     xhtmlOut: false
+#     breaks: true
+#     linkify: true
+#     typographer: true
+#     quotes: '“”‘’'
+#   plugins:
+#     - markdown-it-abbr
+#     - markdown-it-footnote
+#     - markdown-it-ins
+#     - markdown-it-sub
+#     - markdown-it-sup
+#     - markdown-it-checkbox
+#     - markdown-it-emoji
+#     - markdown-it-katex
+#   anchors:
+#     level: 6
+#     collisionSuffix: 'v'
+#     permalink: true
+#     permalinkClass: header-anchor
+#     permalinkSide: 'left'
+#     permalinkSymbol: ¶
 
 # https://github.com/hexojs/hexo-server
 server:

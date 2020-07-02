@@ -15,14 +15,14 @@ aplayer: true
 
 <div class="text-center">
   <div class="site-author-avatar">
-    <img src="/images/avatar.jpg" alt="portrait" title="ID : 云游君" width="96">
+    <img src="/images/avatar.jpg" alt="portrait" title="ID : 原子态" width="96">
   </div>
 </div>
 
 - 爱好：一切有趣的事物
 - 运动：跑步、羽毛球、乒乓球、篮球
 - 目标：发论文！发论文！发论文！
-- 梦想：小说家 && 漫画家 && 侦探 && 理论物理学家 && 飞行员（要不是几乎不可能实现又怎么配得上梦想这个词呢？<s>哈哈</s>）
+- 梦想：小说家 && 漫画家 && 侦探 && 理论物理学家 && 飞行员（要不是几乎不可能实现又怎么配得上梦想这个词呢？~~哈哈~~）
 
 <details>
 <summary>此生想要完成的事情</summary>
@@ -43,4 +43,4 @@ aplayer: true
 
 - E-Mail：[atomicoo95@gmail.com](mailto:atomicoo95@gmail.com)
 - Github：[Atomicoo](https://github.com/atomicoo)（Follow、Star、Fork，懂？ :smirk:）
-- 哔哩哔哩：[吃饭丶不喝汤](https://space.bilibili.com/409646386)（一键三连走起来，铁汁们！）
+- 哔哩哔哩：[薛定谔的原子态](https://space.bilibili.com/409646386)（一键三连走起来，铁汁们！）

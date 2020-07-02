@@ -25,7 +25,7 @@ comment:
   tips:
     - 重要评论建议跳转 GitHub Issues 发布
     - 每篇文章的首个评论需要先根据 Comment 模板创建相应的 Issue
-    - 避免创建重复的 Issue
+    - 请避免创建重复的 Issue，感谢配合
 
 valine:
   enable: true
@@ -141,7 +141,7 @@ menu:
     icon: icon-clipboard-line
 
 banner:
-  title: 原子态的个人站
+  title: 薛定谔的原子态
 
 cursor:
   enable: true
