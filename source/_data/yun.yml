@@ -25,7 +25,7 @@ comment:
   tips:
     - 重要评论建议跳转 GitHub Issues 发布
     - 每篇文章的首个评论需要先根据 Comment 模板创建相应的 Issue
-    - 避免创建重复的 Issue
+    - 请避免创建重复的 Issue，感谢配合
 
 valine:
   enable: true
@@ -53,10 +53,16 @@ footer:
   # ...
 
 social:
-  - name: QQ
-    link: https://wpa.qq.com/msgrd?v=3&uin=793071559&site=qq&menu=yes
-    icon: icon-qq-line
-    color: "#12B7F5"
+  - name: RSS
+    # set rss in your root config
+    # https://github.com/hexojs/hexo-generator-feed
+    link: /atom.xml # config.feed.path
+    icon: icon-rss-line
+    color: orange
+  # - name: QQ
+  #   link: https://wpa.qq.com/msgrd?v=3&uin=793071559&site=qq&menu=yes
+  #   icon: icon-qq-line
+  #   color: "#12B7F5"
   - name: GitHub
     link: https://github.com/atomicoo
     icon: icon-github-line
@@ -135,7 +141,7 @@ menu:
     icon: icon-clipboard-line
 
 banner:
-  title: 原子态的个人站
+  title: 薛定谔的原子态
 
 cursor:
   enable: true
