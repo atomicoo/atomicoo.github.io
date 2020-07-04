@@ -50,7 +50,7 @@ Function 指的是在计算图中对张量 Tensor 所进行的运算，譬如加
 ```sh
 $ y = x + 2; print(y)
 tensor([[3., 3.],
-        [3., 3.]], grad_fn=<AddBackward0>)
+        [3., 3.]], grad_fn=&lt;AddBackward0&gt;)
 ```
 
 在计算图需要反向传播求梯度时只需调用 `.backward()` 即可。上例中，反向传播时需要做的操作就是 `<AddBackward0>`。
@@ -73,7 +73,7 @@ loss = mean(l4)
 
 可以画出对应的计算图如下：
 
-![img](https://pic3.zhimg.com/80/v2-1781041624f4c9fb31df04d11dd6a84a_1440w.jpg)
+![1781041624f4c9fb31df04d11dd6a84a.jpg](https://i.loli.net/2020/07/04/9PUHp5aoE2JOvLR.jpg)
 
 > Note：其中 `input` 张量在实操时 `.requires_grad` 应设置为 `False`，并不需要进行追踪（因为在实操中 `input` 对应的是数据输入，并不是可训练参数，自然无需求导）。
 
@@ -103,7 +103,6 @@ dls/dw3 = dls/dl4 * dl4/dl3 * dl3/dw3 = [2.5, 2.5, 2.5, 2.5]
 dls/dw2 = dls/dl4 * dl4/dl2 * dl2/dw2 = [2.0, 2.0, 2.0, 2.0]
 dls/dw1 = dls/dl4 * dl4/dl3 * dl3/dl1 * dl1/dw1
         + dls/dl4 * dl4/dl2 * dl2/dl1 * dl1/dw1
-        = [5., 5., 5., 5.] + [2., 2., 2., 2.]
         = [7., 7., 7., 7.]
 ```
 
