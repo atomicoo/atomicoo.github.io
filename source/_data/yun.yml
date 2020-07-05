@@ -104,16 +104,16 @@ girls:
   enable: true
 
 tags:
-  动画: crimson
+  小说: crimson
   漫画: orange
-  学习: saddlebrown
-  教程: royalblue
-  笔记: dimgray
-  分享: blue
-  随笔: mediumpurple
-  Blender: "#d04d2d"
-  Linux: "#2577b1"
-  科幻: midnightblue
+  物理: saddlebrown
+  数学: royalblue
+  机器学习: dimgray
+  深度学习: mediumpurple
+  Linux: midnightblue
+  Docker: blue
+  PyTorch: "#d04d2d"
+  TensorFlow: "#2577b1"
 
 # wordcloud:
 #   enable: true

@@ -10,7 +10,7 @@ categories:
   - 一点应用
 ---
 
-## 前言
+## 引言
 
 本文介绍如何利用 Github Pages + Hexo 搭建自己的个人博客静态网站
 
