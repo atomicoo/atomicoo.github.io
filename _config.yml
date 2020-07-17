@@ -178,20 +178,20 @@ marked:
 markdown_it_plus:
   plugins:
     - plugin:
-      name: "@neilsustc/markdown-it-katex"
+      name: "@iktakahiro/markdown-it-katex"
       enable: true
       options:
         strict: false
 
 # https://github.com/crimx/hexo-filter-github-emojis
-githubEmojis:
-  enable: true
-  className: github-emoji
-  unicode: true
-  styles:
-    display: inline
-    vertical-align: middle 
-  localEmojis:
+# githubEmojis:
+#   enable: true
+#   className: github-emoji
+#   unicode: true
+#   styles:
+#     display: inline
+#     vertical-align: middle 
+#   localEmojis:
 
 # Markdown-it config
 ## Docs: https://github.com/celsomiranda/hexo-renderer-markdown-it/wiki
