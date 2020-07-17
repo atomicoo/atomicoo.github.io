@@ -378,6 +378,7 @@ Markdown & HTML 特殊字符转义表，方便自己后续查询。
 | ›      | ›        |          | &rsaquo            |                                    |
 | €      | €        |          | &euro              | 欧元                               |
 
-## 参考资料
+## 转载声明
 
-[markdown、html转义特殊字符代码大全](https://www.cnblogs.com/yifeiyu/p/11402743.html)
+本文转自网络文章 [markdown、html转义特殊字符代码大全](https://www.cnblogs.com/yifeiyu/p/11402743.html)，转载仅为个人收藏、知识分享，版权归原作者所有。如有侵权，请联系[博主](mailto:atomicoo95@gmail.com)进行删除。
+

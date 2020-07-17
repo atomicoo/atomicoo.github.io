@@ -1,7 +1,7 @@
 ---
 title: 【PyTorch 源码阅读】 torch.nn.Module 篇
 date: 2020-07-04 16:52:45
-updated: 2020-07-04 16:52:45
+updated: 2020-07-06 16:59:00
 tags:
   - PyTorch
   - 源码阅读
@@ -12,7 +12,7 @@ categories:
 
 ## 引言
 
-PyTorch 源码阅读系列主要是记录一些阅读 PyTorch 源码时的笔记（好记性不如烂笔头 {% github_emoji wink %}）。事实上 PyTorch 的文档齐全，哪怕你不阅读源码也能够很好地使用它来搭建并训练自己的模型，我之所以选择阅读源码，一方面是为了对 PyTorch 有更深入的理解，另一方面是学习这种优秀的源码也能够帮助自己写出更优雅规范的代码。本文为 `torch.nn.Module` 篇，本系列的第一篇。
+【PyTorch 源码阅读系列】主要是记录一些阅读 PyTorch 源码时的笔记（好记性不如烂笔头 {% github_emoji wink %}）。事实上 PyTorch 的文档齐全，哪怕你不阅读源码也能够很好地使用它来搭建并训练自己的模型，我之所以选择阅读源码，一方面是为了对 PyTorch 有更深入的理解，另一方面是学习这种优秀的源码也能够帮助自己写出更优雅规范的代码。本文为 `torch.nn.Module` 篇，本系列的第一篇。
 
 <!-- more -->
 
@@ -130,9 +130,9 @@ def apply(self, fn):
 
 ---
 
-`cuda` 和 `cpu`。
+`cuda`、`cpu` 和 `share_memory`。
 
-将模块所有的 `tensor` 移入相应的设备 GPU/CPU 中。通过源码可以看到，这两者都调用了前面讲到的 `_apply` 函数。
+将模块所有的 `tensor` 移入指定位置（GPU/CPU/共享内存）中。通过源码可以看到，这三者都调用了前面讲到的 `_apply` 函数。
 
 ```python
 # cuda
@@ -142,6 +142,10 @@ def cuda(self, device=None):
 # cpu
 def cpu(self):
     return self._apply(lambda t: t.cpu())
+
+# shared memory
+def share_memory(self):
+    return self._apply(lambda t: t.share_memory_())
 ```
 
 ---
@@ -190,15 +194,101 @@ def bfloat16(self):
 
 ---
 
-`register_backward_hook`、`register_forward_pre_hook`、`register_forward_hook`。
+`register_backward_hook`、`register_forward_pre_hook` 和 `register_forward_hook`。
+
+这三个函数分别在模块中注册 `forward_pre_hook`、`forward_hook` 和 `backward_hook`。关于 `Hooks` （钩子？挂钩？咋翻好听？）的作用我会在后面专门开一篇文章说明。
+
+```python
+# backward_hook
+hook(module, grad_input, grad_output) -> Tensor or None
+
+# forward_pre_hook
+hook(module, input) -> None or modified input
+
+# forward_hook
+hook(module, output) -> None or modified output
+```
+
+---
+
+`_slow_forward` 和 `__call__`。
+
+`__call__` 是模块计算的真正入口，内部会调用 `_slow_forward` 函数或者 `forward` 函数进行计算，事实上 `_slow_forward` 内部最终也是调用 `forward` 函数进行计算，两者的差别在于有些自定义操作是没有 C 代码的，这种情况就会直接调用 Python 版本，反之调用 C 版本（效率高）。简化源码如下：
+
+```python
+def __call__(self, *input, **kwargs):
+    for hook in self._forward_pre_hooks.values():
+        # ...
+    if torch._C._get_tracing_state():
+        result = self._slow_forward(*input, **kwargs)
+    else:
+        result = self.forward(*input, **kwargs)
+    for hook in self._forward_hooks.values():
+        # ...
+    for hook in self._backward_hooks.values():
+        # ...
+    return result
+```
+
+---
+
+`__setstate__`。
+
+`__setstate__` 设置 `state`，这个比较简单，直接看源码。
+
+```python
+def __setstate__(self, state):
+    self.__dict__.update(state)
+    # Support loading old checkpoints that don't have the following attrs:
+    if '_forward_pre_hooks' not in self.__dict__:
+        self._forward_pre_hooks = OrderedDict()
+    if '_state_dict_hooks' not in self.__dict__:
+        self._state_dict_hooks = OrderedDict()
+    if '_load_state_dict_pre_hooks' not in self.__dict__:
+        self._load_state_dict_pre_hooks = OrderedDict()
+```
+
+---
+
+`__getattr__`、`__setattr__` 和 `__delattr__`。
+
+`__getattr__` 用于获取指定 `name` 的模块成员（包括 `parameters`、`buffers` 和 `modules`，查找顺序从前到后）。
+
+`__getattr__` 用于查找指定 `name` 的模块成员后对其进行设置（同上）。
+
+`__delattr__` 用于删除指定 `name` 的模块成员（同上）。
+
+这三个函数都比较简单，不多做说明。
+
+---
+
+`_register_state_dict_hook` 和 `_register_load_state_dict_pre_hook`。
+
+这三个函数与前面提到的 `register_*_hook` 类似，用于注册 `Hooks`。
+
+`_register_state_dict_hook` ：
+
+*These hooks will be called with arguments: `self`, `state_dict`, `prefix`, `local_metadata`, after the `state_dict` of `self` is set.*
+
+`_register_load_state_dict_pre_hook`：
+
+*These hooks will be called with arguments: `state_dict`, `prefix`, `local_metadata`, `strict`, `missing_keys`, `unexpected_keys`, `error_msgs`, before loading `state_dict` into `self`.*
+
+---
+
+`_save_to_state_dict` 和 `_load_from_state_dict`。
+
+`_save_to_state_dict` 作用是保存 `state` 到 `destination` 指定的字典中，此函数会被当前模块的所有子模块调用（*This is called on every submodule in :meth:`~torch.nn.Module.state_dict`*）。
+
+`_load_from_state_dict` 作用与 `_save_to_state_dict` 相反，用来加载模块。
 
 ---
 
 `state_dict` 和 `load_state_dict`。
 
-`state_dict` 的作用是返回一个包含模块完整 `state` 的字典（*Returns a dictionary containing a whole state of the module*），字典中的键值对对应着 `name: parameters` 或 `name: buffers`。
+`state_dict` 的作用是返回一个包含模块完整 `state` 的字典（*Returns a dictionary containing a whole state of the module*），字典中的键值对对应着 `name: parameters` 或 `name: buffers`。此函数会调用上面的 `_save_to_state_dict` 函数。
 
-`load_state_dict` 的作用与 `state_dict` 相反，是将  `name: parameters` 或 `name: buffers` 加载到模块及其子模块中去。
+`load_state_dict` 的作用与 `state_dict` 相反，是将  `name: parameters` 或 `name: buffers` 加载到模块及其子模块中去。此函数会调用上面的 `_load_from_state_dict` 函数。
 
 ---
 
@@ -304,7 +394,9 @@ def eval(self):
 
 ---
 
-To Be Continued.
+`_get_name`、`extra_repr`、`__repr__` 和 `__dir__`。
+
+这四个函数都是用于输出模块相关信息的，并不复杂，直接看源码即可。
 
 ---
 
@@ -312,10 +404,10 @@ To Be Continued.
 
 - buffers
 - in-place
-- hook
+- hooks
 
 ## 参考资料
 
-[PyTorch 官方文档](https://pytorch.org/docs/stable/_modules/torch/nn/modules/module.html#Module)
+[PyTorch 官方文档](https://pytorch.org/docs/stable/nn.html#module)
 
 <!-- Q.E.D. -->
