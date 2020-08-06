@@ -47,10 +47,9 @@ github_issues:
 
 footer:
   since: 2020
-  # beian:
-  #   enable: true
-  #   icp: 苏ICP备********号
-  # ...
+  beian:
+    enable: true
+    icp: 闽ICP备20015372号
 
 social:
   - name: RSS
