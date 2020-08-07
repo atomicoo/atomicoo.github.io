@@ -89,6 +89,12 @@ $$ \begin{Bmatrix} a & b \\\\ c & d \end{Bmatrix} $$
 
 $$ \begin{pmatrix} a & b \\\\ c & d \end{pmatrix} \qquad \begin{bmatrix} a & b \\\\ c & d \end{bmatrix} \qquad \begin{vmatrix} a & b \\\\ c & d \end{vmatrix} \qquad \begin{Vmatrix} a & b \\\\ c & d \end{Vmatrix} \qquad \begin{Bmatrix} a & b \\\\ c & d \end{Bmatrix} $$
 
+```latext
+$$ \begin{pmatrix} a_{11} & a_{12} & \cdots & a_{1n} \\\\ a_{21} & a_{22} & \cdots & a_{2n} \\\\ \vdots & \vdots & \ddots & \vdots \\\\ a_{m1} & a_{m1} & \cdots & a_{mn} \end{pmatrix} $$
+```
+
+$$ \begin{pmatrix} a_{11} & a_{12} & \cdots & a_{1n} \\\\ a_{21} & a_{22} & \cdots & a_{2n} \\\\ \vdots & \vdots & \ddots & \vdots \\\\ a_{m1} & a_{m1} & \cdots & a_{mn} \end{pmatrix} $$
+
 ---
 
 **上下标记**
@@ -102,5 +108,15 @@ $$ \overbrace{1+2+\cdots+n}^{n个} \qquad \underbrace{a+b+\cdots+z}_{26} $$
 ---
 
 To Be Continued.
+
+---
+
+**便捷工具**
+
+[KATEX 支持语法（类型）](https://katex.org/docs/supported.html)
+
+[KATEX 支持语法（表格）](https://katex.org/docs/support_table.html)
+
+[Detexify - 根据 LATEX 符号搜索名称](http://detexify.kirelabs.org/classify.html)
 
 <!-- Q.E.D. -->

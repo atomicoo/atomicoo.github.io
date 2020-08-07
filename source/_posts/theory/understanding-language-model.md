@@ -26,7 +26,7 @@ katex: true
 
 ## 统计语言模型
 
-提到统计语言模型就不得不谈谈 N 元文法模型（N-Gram Model）了。
+说到这里，就不得不谈谈 N 元文法模型（N-Gram Model）了。
 
 ### N-Gram 模型基础
 
@@ -169,16 +169,18 @@ P(aa) + P(ab) + ... + P(cb) + P(cc) = 7/18 < 1
 
 $$ \begin{aligned} x &= concat(C(w)_{t-n+1}^{t-1}) \\\\ h &= tanh(Hx + d)  \\\\ y &= Wx + Uh + b \end{aligned} $$
 
+其中，$concat(\cdot)$ 为拼接函数，$C(w)_{i}^{j}$ 表示 $C(w_{i}), \ldots, C(w_{j})$，$C(w_{i})$ 为 $w_{i}$ 的词向量。
+
 
 ### 基于递归神经网络
 
-上面提到的前馈神经网络模型虽然很好地改善了统计模型泛化能力较差的问题，但是实质上还是一个 N-Gram 模型的思想，只考虑了有限的前文信息，那么在遇到长序列时候有没有什么办法能够考虑到足够远的前文信息呢？当然有！那就是 Mikolov 于 2010 年发表的论文 [Recurrent neural network based language model](https://www.isca-speech.org/archive/archive_papers/interspeech_2010/i10_1045.pdf) 中提出的方法，该论文将 SRNN 用在了 LM 训练任务上。公式如下（其实就是最简单的 RNN 结构）：
+上面提到的前馈神经网络模型虽然很好地改善了统计模型泛化能力较差的问题，但是实质上还是基于 N-Gram 模型的思想，只考虑了有限的前文信息，那么在遇到长序列时候有没有什么办法能够考虑到足够远的前文信息呢？当然有！那就是 Mikolov 于 2010 年发表的论文 [Recurrent neural network based language model](https://www.isca-speech.org/archive/archive_papers/interspeech_2010/i10_1045.pdf) 中提出的方法，该论文将 RNN 用在了 LM 训练任务上。公式如下（注意，这里的 RNN 指的是狭义上最基础的 RNN 网络，即只在 RNNCell 内部建立了权连接）：
 
-$$ \begin{aligned} x_{t}^{i} &= concat(w_{t}^{i}+h_{t-1}^{i}) \\\\ h_{t}^{i} &= f(W^{i} x_{t}^{i} + b^{i}) \\\\ y_{t} &= g(U h_{t}^{n} + b) \end{aligned} $$
+$$ \begin{aligned} x_{t}^{i} &= concat(w_{t}^{i}, h_{t-1}^{i}) \\\\ h_{t}^{i} &= f(W^{i} x_{t}^{i} + b^{i}) \\\\ y_{t} &= g(U h_{t}^{n} + b) \end{aligned} $$
 
 其中，输入的词嵌入 $w_{t}^{1}$ 使用最简单的 one-hot 编码，$n$ 为 RNN 网络层数，$i \in [1, n]$，$f(\cdot)$ 为 $sigmoid(\cdot)$，$g(\cdot)$ 为 $softmax(\cdot)$。
 
-额外多说几句。单从理论上来说，RNN 应该是能够捕获足够远的前文信息的，但在实践中并非如此，一个合理的直觉是：因为 SRNN 网络使用的这种最简单的 Cell 导致前文信息很容易随着时间步而逐渐被稀释，当遇到长序列时，较远的前文信息已经被稀释到几乎可以忽略不计了。也正因为如此，后来又进一步发展出了 [LSTM]() 和 [GRU]() 等各种衍生的 RNN 网络。
+额外多说几句。单从理论上来说，RNN 应该是能够捕获足够远的前文信息的，但在实践中并非如此，一个合理的直觉是：因为 RNN 使用的这种最简单的 Cell 结构导致前文信息很容易随着时间步而逐渐被稀释，当遇到长序列时，较远的前文信息已经被稀释到几乎可以忽略不计了。也正因为如此，后来又进一步发展出了 [LSTM](#) 和 [GRU](#) 等各种衍生的递归神经网络（关于这部分，以后我会专门开一篇博客进行介绍）。
 
 事实上，从统计语言模型开始一直到后面的各种递归神经网络，只要能够理解语言模型（Language Model）到底在做些什么，那么其他所有的东西也只是实现方法的不断改进优化罢了。
 
