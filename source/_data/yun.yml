@@ -102,17 +102,17 @@ albums:
 girls:
   enable: true
 
-tags:
-  小说: crimson
-  漫画: orange
-  物理: saddlebrown
-  数学: royalblue
-  机器学习: dimgray
-  深度学习: mediumpurple
-  Linux: midnightblue
-  Docker: blue
-  PyTorch: "#d04d2d"
-  TensorFlow: "#2577b1"
+# tags:
+#   小说: crimson
+#   漫画: orange
+#   物理: saddlebrown
+#   数学: royalblue
+#   机器学习: dimgray
+#   深度学习: mediumpurple
+#   Linux: midnightblue
+#   Docker: blue
+#   PyTorch: "#d04d2d"
+#   TensorFlow: "#2577b1"
 
 # wordcloud:
 #   enable: true
