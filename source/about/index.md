@@ -11,7 +11,7 @@ aplayer: true
 > ## 原子态
 > 
 > Atomicoo's
-> 我，一个沙雕又骚包的逗逼
+> “咚！咚！咚！”
 
 <div class="text-center">
   <div class="site-author-avatar">
