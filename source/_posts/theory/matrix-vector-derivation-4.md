@@ -29,7 +29,7 @@ katex: true
 
 $$ \cfrac{\partial{\bold{z}}}{\partial{\bold{x}}}=\cfrac{\partial{\bold{z}}}{\partial{\bold{y}}} \cfrac{\partial{\bold{y}}}{\partial{\bold{x}}} \tag{1.1} $$
 
-注意几个求导结果的维度，$\cfrac{\partial{\bold{z}}}{\partial{\bold{x}}} \in \R^{p \times n}, \cfrac{\partial{\bold{z}}}{\partial{\bold{y}}} \in \R^{p \times m}, \cfrac{\partial{\bold{y}}}{\partial{\bold{x}}} \in \R^{m \times n}$，显然是匹配的。
+注意几个求导结果的维度，$\cfrac{\partial{\bold{z}}}{\partial{\bold{x}}} \in \R^{p \times n}, \cfrac{\partial{\bold{z}}}{\partial{\bold{y}}} \in \R^{p \times m}, \cfrac{\partial{\bold{y}}}{\partial{\bold{x}}} \in \R^{m \times n}$，从**维度相容**的角度可以快速求解。
 
 同样的结论可以推广到更多的向量、更长的链式依赖关系 $f: \bold{x} \to \bold{y_{1}} \to \cdots \to \bold{y_{q}} \to \bold{z}$，记 $\bold{x} \triangleq \bold{y_{0}}, \bold{z} \triangleq \bold{y_{q+1}}$，则：
 
