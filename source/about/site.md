@@ -20,7 +20,7 @@ aplayer: true
 <summary>2020 年</summary>
 
 ### 2020-08-10
-多域名绑定
+多域名绑定  
 域名：[atomicoo.com](https://atomicoo.com/)  
 域名：[atomicoo.site](https://atomicoo.site/)  
 描述：利用重定向解决 Github Page 无法绑定多个域名的问题，详见 [atomicoo/blog](https://github.com/atomicoo/blog)  
