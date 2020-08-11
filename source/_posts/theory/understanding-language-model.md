@@ -6,7 +6,6 @@ tags:
   - 语言模型
   - N-Grams
   - 神经网络
-  - RNN
 categories:
   - 一点理论
 katex: true
