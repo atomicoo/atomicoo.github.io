@@ -136,8 +136,4 @@ $$ \bold{\delta}^{(l)}=((W^{(l)})^{T} \bold{\delta}^{(l+1)}) \odot f^{'}(\bold{z
 
 [反向传播算法推导-全连接神经网络](https://zhuanlan.zhihu.com/p/39195266)
 
----
-
-To Be Continued.
-
 <!-- Q.E.D. -->
