@@ -20,7 +20,7 @@ timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'https://yoursite.com/child' and root as '/child/'
-url: https://www.atomicoo.com
+url: https://atomicoo.site
 root: /
 permalink: :title/ # :category/:title
 permalink_defaults:
