@@ -4,6 +4,7 @@ Thumbs.db
 temp/
 yarn.lock
 package-lock.json
+source/_posts/**/*.png
 
 # dev
 node_modules/

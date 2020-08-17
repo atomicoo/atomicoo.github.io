@@ -4,6 +4,11 @@ date: 2020-06-26 13:00:41
 updated: 2020-06-26 13:00:41
 ---
 
-## [Color Dust](/slides/color-dust.html)
+## [色尘](/slides/color-dust.html)
 
-一个图片色彩提取与分析工具。
+关于“色”的知识。
+
+## [声尘](/slides/sound-dust.html)
+
+关于“声”的知识。
+
