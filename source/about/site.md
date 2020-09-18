@@ -1,7 +1,7 @@
 ---
 title: 关于
 date: 2020-06-26 11:31:11
-updated: 2020-06-26 11:31:11
+updated: 2020-09-18 22:13:00
 type: about
 aplayer: true
 ---
@@ -18,6 +18,13 @@ aplayer: true
 
 <details open>
 <summary>2020 年</summary>
+
+### 2020-09-18
+
+重启主域名  
+域名（主要）：[atomicoo.com](https://atomicoo.com/)  
+域名（备用）：[atomicoo.site](https://atomicoo.site/)  
+描述：主域名备案已完成，重新启用
 
 ### 2020-08-12
 
@@ -36,14 +43,14 @@ aplayer: true
 ### 2020-08-05
 
 域名备案  
-名称：原子君的 AI 手记  
+名称：原子态  
 域名（备用）：[atomicoo.site](https://atomicoo.site/)  
 备案号：闽ICP备20015372号
 
 ### 2020-06-27
 
 正式建站  
-名称：薛定谔的原子态  
+名称：原子态  
 域名：[atomicoo.com](https://atomicoo.com/)  
 
 </details>

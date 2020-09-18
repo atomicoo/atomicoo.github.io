@@ -121,11 +121,11 @@ categories:
   一点痕迹: "#FB7299"
 
 pages:
-  - name: 友链
+  - name: Links
     url: /links/
     icon: icon-genderless-line
     color: dodgerblue
-  - name: 女孩
+  - name: Girls
     url: /girls/
     icon: icon-women-line
     color: hotpink
@@ -140,7 +140,7 @@ menu:
     icon: icon-clipboard-line
 
 banner:
-  title: 薛定谔的原子态
+  title: 一行代码调一天
 
 cursor:
   enable: true

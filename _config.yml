@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 薛定谔的原子态
+title: 原子态
 subtitle: Atomicoo's
 description: “咚！咚！咚！”
 keywords:
@@ -11,7 +11,6 @@ keywords:
   - Blog
   - 原子态
   - 博客
-  - 薛定谔的原子态
   - atomicoo.com
   - atomicoo.site
 author: 原子态
@@ -20,7 +19,7 @@ timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'https://yoursite.com/child' and root as '/child/'
-url: https://atomicoo.site
+url: https://atomicoo.com
 root: /
 permalink: :title/ # :category/:title
 permalink_defaults:

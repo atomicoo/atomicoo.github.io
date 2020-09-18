@@ -42,4 +42,5 @@ aplayer: true
 
 - E-Mail：[atomicoo95@gmail.com](mailto:atomicoo95@gmail.com)
 - Github：[Atomicoo](https://github.com/atomicoo)（Follow、Star、Fork，懂？ {% github_emoji smirk %}）
-- 哔哩哔哩：[薛定谔的原子态](https://space.bilibili.com/409646386)（一键三连走起来，铁汁们！）
+- Github: [Joee1995](https://github.com/Joee1995)
+- 哔哩哔哩：[薛定谔的原子态](https://space.bilibili.com/409646386)
