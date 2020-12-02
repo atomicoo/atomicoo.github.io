@@ -156,6 +156,94 @@ cnpm install hexo-render-pug hexo-renderer-stylus --save
 
 ![1593085668274.png](https://i.loli.net/2020/06/26/mHgpUCWE6PaAnqS.png)
 
+## 部署
+
+### 部署到 Github
+
+需要先安装部署插件 `hexo-deploy-git`
+
+```sh
+cnpm install hexo-deployer-git --save
+```
+
+然后编辑配置文件 `_config.yml` 添加内容
+
+```sh
+deploy:
+  type: git
+  repo: git@github.com:zhanghanlun/zhanghanlun.github.io.git
+  branch: master
+```
+
+最后通过命令部署
+
+```sh
+hexo deploy
+or
+hexo clean && hexo deploy
+```
+
+保存，部署，完成后即可通过 [`https://atomicoo.github.io/`](<https://atomicoo.github.io/>) 访问
+
+### 备份与自动部署
+
+#### 源码备份
+
+以上步骤已将静态文件部署到 Github 上了，但最好将源码也备份一份以防万一（比如误删源码的情况等）
+
+创建新分支 `source` 用于备份源码，仅首次
+
+```sh
+git init
+git branch source
+git branch -v
+```
+
+> 注意：Git 的初始化仓库必须至少 `commot` 过一次才会真正创建 `master`分支，所以以上 `git init` 之后需要先随便提交一次，比如， `git add README.md && git commit -m "first commit"`，否则会报错
+
+与 Github 仓库建立连接，仅首次
+
+```sh
+git remote add origin https://github.com/atomicoo/atomicoo.github.io
+```
+
+提交源码至本地 Git 仓库的 `source` 分支
+
+```sh
+git checkout source
+git add -A
+git commit -m "commit message"
+```
+
+将源码推送至远方 Github 仓库的  `source` 分支
+
+```sh
+git push origin source
+```
+
+此处需要输入 Github 用户名和密码
+
+> 注意：为了避免我们所使用的 Hexo 主题相关仓库的变动导致我们的站点出问题，我们可以自行 Fork 相关仓库然后作为子库调用。这里使用了 `git-submodule`，参考 [Docs of Git Submodule](<https://git-scm.com/docs/git-submodule>)
+
+```sh
+# git submodule add <远程仓库> <本地路径>
+git submodule add -b master https://github.com/atomicoo/hexo-theme-yun.git themes/yun
+```
+
+#### 自动部署
+
+如果每次修改都需要人工进行部署的话其实是非常麻烦的，此时我们就可以考虑使用持续集成进行自动部署，比较常用的是 [Github Actions](<https://help.github.com/en/actions/getting-started-with-github-actions/about-github-actions>)，[Netlify](<https://www.netlify.com/>)，[Travis CI](<https://travis-ci.org/>)
+
+具体方案及部署步骤请参考 [初探无后端静态博客自动化部署方案](<https://blog.ichr.me/post/automated-deployment-of-serverless-static-blog/>) 或者 Hexo 官方文档 [将 Hexo 部署到 GitHub Pages](<https://hexo.io/zh-cn/docs/github-pages>)
+
+若选择使用 Github Actions，可参考我的自动部署脚本 [gh-pages.yml](<https://github.com/atomicoo/atomicoo.github.io/blob/source/.github/workflows/gh-pages.yml>)
+
+对应的 Github 项目 `<username>.github.io` 的 `Actions` 中可查看自动部署的历史情况
+
+![1593085858921.png](https://i.loli.net/2020/06/26/wuy1atskNe4HbZx.png)
+
+至此，个人博客网站基本搭建完成，接下来根据自己的需求与喜好持续完善即可。
+
 ## 写作
 
 ### 文章
@@ -304,94 +392,6 @@ code snippet
 ### 数据文件夹
 
 这部分我用的比较少，暂略。此处插眼 [Hexo 文档 | 数据文件夹](<https://hexo.io/zh-cn/docs/data-files>)
-
-## 部署
-
-### 部署到 Github
-
-需要先安装部署插件 `hexo-deploy-git`
-
-```sh
-cnpm install hexo-deployer-git --save
-```
-
-然后编辑配置文件 `_config.yml` 添加内容
-
-```sh
-deploy:
-  type: git
-  repo: git@github.com:zhanghanlun/zhanghanlun.github.io.git
-  branch: master
-```
-
-最后通过命令部署
-
-```sh
-hexo deploy
-or
-hexo clean && hexo deploy
-```
-
-保存，部署，完成后即可通过 [`https://atomicoo.github.io/`](<https://atomicoo.github.io/>) 访问
-
-### 备份与自动部署
-
-#### 源码备份
-
-以上步骤已将静态文件部署到 Github 上了，但最好将源码也备份一份以防万一（比如误删源码的情况等）
-
-创建新分支 `source` 用于备份源码，仅首次
-
-```sh
-git init
-git branch source
-git branch -v
-```
-
-> 注意：Git 的初始化仓库必须至少 `commot` 过一次才会真正创建 `master`分支，所以以上 `git init` 之后需要先随便提交一次，比如， `git add README.md && git commit -m "first commit"`，否则会报错
-
-与 Github 仓库建立连接，仅首次
-
-```sh
-git remote add origin https://github.com/atomicoo/atomicoo.github.io
-```
-
-提交源码至本地 Git 仓库的 `source` 分支
-
-```sh
-git checkout source
-git add -A
-git commit -m "commit message"
-```
-
-将源码推送至远方 Github 仓库的  `source` 分支
-
-```sh
-git push origin source
-```
-
-此处需要输入 Github 用户名和密码
-
-> 注意：为了避免我们所使用的 Hexo 主题相关仓库的变动导致我们的站点出问题，我们可以自行 Fork 相关仓库然后作为子库调用。这里使用了 `git-submodule`，参考 [Docs of Git Submodule](<https://git-scm.com/docs/git-submodule>)
-
-```sh
-# git submodule add <远程仓库> <本地路径>
-git submodule add -b master https://github.com/atomicoo/hexo-theme-yun.git themes/yun
-```
-
-#### 自动部署
-
-如果每次修改都需要人工进行部署的话其实是非常麻烦的，此时我们就可以考虑使用持续集成进行自动部署，比较常用的是 [Github Actions](<https://help.github.com/en/actions/getting-started-with-github-actions/about-github-actions>)，[Netlify](<https://www.netlify.com/>)，[Travis CI](<https://travis-ci.org/>)
-
-具体方案及部署步骤请参考 [初探无后端静态博客自动化部署方案](<https://blog.ichr.me/post/automated-deployment-of-serverless-static-blog/>) 或者 Hexo 官方文档 [将 Hexo 部署到 GitHub Pages](<https://hexo.io/zh-cn/docs/github-pages>)
-
-若选择使用 Github Actions，可参考我的自动部署脚本 [gh-pages.yml](<https://github.com/atomicoo/atomicoo.github.io/blob/source/.github/workflows/gh-pages.yml>)
-
-对应的 Github 项目 `<username>.github.io` 的 `Actions` 中可查看自动部署的历史情况
-
-![1593085858921.png](https://i.loli.net/2020/06/26/wuy1atskNe4HbZx.png)
-
-至此，个人博客网站基本搭建完成，接下来根据自己的需求与喜好持续完善即可。
 
 ## 参考资料
 
