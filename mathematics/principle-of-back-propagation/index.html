@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="原子态"><meta name="copyright" content="原子态"><meta name="generator" content="Hexo 4.2.1"><meta name="theme" content="hexo-theme-yun"><title>【数学天坑】之反向传播算法数学原理 | 原子态</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;family=Source+Code+Pro&amp;display=swap" media="none" onload="this.media='all'"><script src="//at.alicdn.com/t/font_1140697_stqaphw3j4.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.min.js"></script><script defer src="https://cdn.jsdelivr.net/gh/atomicoo/hexo-theme-yun@latest/source/js/katex/auto-render.min.js" onload="renderMathInElement(document.body);"></script><link rel="shortcut icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/css/hexo-theme-yun.css"><link rel="alternate" href="/atom.xml" title="原子态"><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"root":"/","title":"一行代码调一天","version":"0.9.1","anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"algolia":{"appID":"KP7IPEQ96T","apiKey":"4d1c9fc1470aaacb209d4eecaf3b4879","indexName":"my-hexo-blog","hits":{"per_page":8},"labels":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容: ${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><link rel="preconnect" href="https://www.google-analytics.com" crossorigin><link rel="preconnect" href="https://stats.g.doubleclick.net" crossorigin><script async src="https://www.googletagmanager.com/gtag/js?id=UA-170889853-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-170889853-1');</script><meta name="description" content="引言神经网络的训练主要由三个部分组成：1) 网络模型；2) 损失函数；3) 参数学习算法。 我们今天的主角，反向传播算法（Back Propagation Algorithm，BP Algorithm），常与参数优化算法（譬如梯度下降法等）结合使用，属于参数学习算法的一部分（或者说是参数学习算法的好搭档，取决于你怎么理解“参数学习算法”这一概念）。该算法会对网络中所有权重计算损失函数的梯度，并反馈">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【数学天坑】之反向传播算法数学原理">
+<meta property="og:url" content="https://atomicoo.com/mathematics/principle-of-back-propagation/index.html">
+<meta property="og:site_name" content="原子态">
+<meta property="og:description" content="引言神经网络的训练主要由三个部分组成：1) 网络模型；2) 损失函数；3) 参数学习算法。 我们今天的主角，反向传播算法（Back Propagation Algorithm，BP Algorithm），常与参数优化算法（譬如梯度下降法等）结合使用，属于参数学习算法的一部分（或者说是参数学习算法的好搭档，取决于你怎么理解“参数学习算法”这一概念）。该算法会对网络中所有权重计算损失函数的梯度，并反馈">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-10T09:46:13.000Z">
+<meta property="article:modified_time" content="2020-08-10T09:46:13.000Z">
+<meta property="article:author" content="原子态">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="神经网络">
+<meta property="article:tag" content="BP算法">
+<meta name="twitter:card" content="summary"><script src="/js/ui/mode.js"></script><link rel="alternate" href="/atom.xml" title="原子态" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script defer src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="原子态"><img width="96" loading="lazy" src="/images/avatar.jpg" alt="原子态"></a><div class="site-author-name"><a href="/about/">原子态</a></div><a class="site-name" href="/about/site.html">原子态</a><sub class="site-subtitle">Atomicoo's</sub><div class="site-desciption">“咚！咚！咚！”</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">13</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">5</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">24</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="/atom.xml" title="RSS" target="_blank" style="color:orange"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-rss-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/atomicoo" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/409646386" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-bilibili-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:atomicoo95@gmail.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="Links" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-genderless-line"></use></svg></a><a class="links-item hty-icon-button" href="/girls/" title="Girls" style="color:hotpink"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-women-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抛砖引玉"><span class="toc-number">2.</span> <span class="toc-text">抛砖引玉</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快速矩阵求导"><span class="toc-number">3.</span> <span class="toc-text">快速矩阵求导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快速反向传播"><span class="toc-number">4.</span> <span class="toc-text">快速反向传播</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">6.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="https://atomicoo.com/mathematics/principle-of-back-propagation/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="原子态"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="原子态"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">【数学天坑】之反向传播算法数学原理<a class="post-edit-link" href="https://github.com/atomicoo/atomicoo.github.io/tree/source/source/_posts/mathematics/principle-of-back-propagation.md" target="_blank" title="编辑" rel="noopener"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-edit-line"></use></svg></a></h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2020-08-10 17:46:13" itemprop="dateCreated datePublished" datetime="2020-08-10T17:46:13+08:00">2020-08-10</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">7.7k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">14 分钟</span></span></span><span class="leancloud_visitors" id="/mathematics/principle-of-back-propagation/" data-flag-title="【数学天坑】之反向传播算法数学原理"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span class="leancloud-visitors-count"></span></span></span><div class="post-classify"><span class="post-category"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span> <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category" href="/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">数学研究</span></a></span> > <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category" href="/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/%E4%BF%A1%E6%81%AF%E6%97%B6%E4%BB%A3/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">信息时代</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag" href="/tags/%E6%95%B0%E5%AD%A6/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">数学</span></a><a class="tag" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">神经网络</span></a><a class="tag" href="/tags/BP%E7%AE%97%E6%B3%95/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">BP算法</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content post-markdown"><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>神经网络的训练主要由三个部分组成：1) 网络模型；2) 损失函数；3) 参数学习算法。</p>
+<p>我们今天的主角，<strong>反向传播算法</strong>（Back Propagation Algorithm，BP Algorithm），常与参数优化算法（譬如梯度下降法等）结合使用，属于参数学习算法的一部分（或者说是参数学习算法的好搭档，取决于你怎么理解“参数学习算法”这一概念）。该算法会对网络中所有权重计算损失函数的梯度，并反馈给参数优化算法用以更新权重。</p>
+<p>对于反向传播算法，有两个常见的误区在这里澄清一下：</p>
+<ul>
+<li>反向传播算法是<strong>梯度计算方法</strong>，而不是参数学习算法</li>
+<li>反向传播算法理论上可以用于计算<strong>任何函数</strong>的梯度，而不是仅仅用于多层神经网络</li>
+</ul>
+<p>本文会从“<strong>维度相容</strong>”的角度介绍快速矩阵求导和反向传播算法。</p>
+<a id="more"></a>
+
+<h2 id="抛砖引玉"><a href="#抛砖引玉" class="headerlink" title="抛砖引玉"></a>抛砖引玉</h2><p>先用一个例子来抛砖引玉。</p>
+<p>已知：$J=(X \bold{\omega}-\bold{y})^{T} (X \bold{\omega}-\bold{y})=|X \bold{\omega}-\bold{y}|^{2}$，其中 $X \in \R^{m \times n}, \bold{\omega} \in \R^{n}, \bold{y} \in \R^{m}$。</p>
+<p>求 $\cfrac{\partial{J}}{\partial{X}}, \cfrac{\partial{J}}{\partial{\bold{\omega}}}, \cfrac{\partial{J}}{\partial{\bold{y}}}$？</p>
+<p>熟悉的老铁们可能已经发现了，这其实就是线性回归的矩阵表示形式。在实践时，我们通常只会对 $\bold{\omega}$ 求导来进行最小二乘估计，但在这里因为本例只是作为一个引子，所以会对 $X, \bold{\omega}, \bold{y}$ 都进行求导，并无实际意义。</p>
+<p>反向传播算法的关键在于“<strong>链式求导法则</strong>”：若函数 $f, g$ 可导，则 $(f \circ g)^{‘}(x)=f^{‘}(g(x))g^{‘}(x)$。</p>
+<h2 id="快速矩阵求导"><a href="#快速矩阵求导" class="headerlink" title="快速矩阵求导"></a>快速矩阵求导</h2><p>这一节将介绍如何从“维度相容”的角度进行快速矩阵求导，其核心在于<strong>维度相容原则</strong>。那么，什么是维度相容原则？</p>
+<p><strong>维度相容原则</strong>：通过<strong>换序</strong>、<strong>转置</strong>操作使求导结果满足维度条件。</p>
+<blockquote>
+<p>关于矩阵求导结果需要满足的维度条件，涉及到矩阵求导布局的问题，具体可以参考我之前的博客 <a href="https://atomicoo.com/theory/matrix-vector-derivation-1/">【数学天坑】之矩阵/向量求导（一）</a>。<br>另外，维度相容实际上是多元微分中的知识，我在之前的博客中也说过，<strong>矩阵求导本质就是多元函数求导</strong>，这也就很容易理解为什么可以把维度相容“移植”过来使用了，毕竟知识都是相通的。</p>
+</blockquote>
+<p>从维度相容角度进行快速矩阵求导说起来就四个字“简单粗暴”，不够严谨但足够好用。套用一下“爆炸即艺术”的句式，那就是——<strong>简单即艺术</strong>！</p>
+<p>快速矩阵求导共有两个步骤，我们用上一节的例子来进行说明。</p>
+<p>步骤一：把所有参数看成是标量来进行求导。</p>
+<p>显然，这一步哪怕是中学生也能轻松完成，$J=(X \bold{\omega}-\bold{y})^{2}$，由链式法则，按照标量方式求导的结果：</p>
+<p>$$ \begin{aligned} \cfrac{\partial{J}}{\partial{X}}=2 (X \bold{\omega}-\bold{y}) \bold{\omega} \\ \cfrac{\partial{J}}{\partial{\bold{\omega}}}=2 (X \bold{\omega}-\bold{y}) X \\ \cfrac{\partial{J}}{\partial{\bold{y}}}=-2 (X \bold{\omega}-\bold{y}) \end{aligned} $$</p>
+<p>检查求导结果的维度，除了 $\cfrac{\partial{J}}{\partial{\bold{y}}}$ 之外，$\cfrac{\partial{J}}{\partial{X}}$ 和 $\cfrac{\partial{J}}{\partial{\bold{\omega}}}$ 都是不满足维度条件的。</p>
+<p>步骤二：利用换序、转置操作调整维度满足条件。</p>
+<p>考虑矩阵求导维度，有：</p>
+<p>$$ \cfrac{\partial{J}}{\partial{X}} \in \R^{m \times n}, \cfrac{\partial{J}}{\partial{\bold{\omega}}} \in \R^{n} $$</p>
+<p>根据维度相容原则：</p>
+<p>$$ \cfrac{\partial{J}}{\partial{X}} \in \R^{m \times n}, (X \bold{\omega}-\bold{y}) \in \R^{m}, \bold{\omega} \in \R^{n} $$</p>
+<p>通过换序、转置操作可得：</p>
+<p>$$ \cfrac{\partial{J}}{\partial{X}}=2 (X \bold{\omega}-\bold{y}) \bold{\omega}^{T} $$</p>
+<p>满足维度条件。同理可得：</p>
+<p>$$ \cfrac{\partial{J}}{\partial{\bold{\omega}}}=2 X^{T} (X \bold{\omega}-\bold{y}) $$</p>
+<p>简单总结下维度相容快速矩阵求导：</p>
+<ul>
+<li>步骤一：把所有参数看成是标量来进行求导</li>
+<li>步骤二：利用换序、转置操作调整维度满足条件</li>
+</ul>
+<h2 id="快速反向传播"><a href="#快速反向传播" class="headerlink" title="快速反向传播"></a>快速反向传播</h2><p>前面已经提到过，反向传播算法的关键在于“<strong>链式求导法则</strong>”，在反向时需要一层一层地往前进行链式求导。</p>
+<p>第 $l$ 层的前向传播过程：</p>
+<p>$$ \begin{aligned} \bold{z}^{(l+1)}&amp;=W^{(l)} \bold{a}^{(l)}+\bold{b}^{(l)} \\ \bold{a}^{(l+1)}&amp;=f(\bold{z}^{(l+1)}) \end{aligned} $$</p>
+<p>其中，$\bold{a}^{(l)}$ 为第 $l$ 层的输入，$W^{(l)}, \bold{b}^{(l)}$ 为第 $l$ 层的参数，$\bold{z}^{(l+1)}$ 为第 $l$ 层的中间结果，$f(\cdot)$ 为激活函数，$\bold{a}^{(l+1)}$ 为第 $l$ 层的激活值（也是第 $l$ 层的输出）。</p>
+<p>设损失函数为 $J(W, \bold{b}) \in \R$（这里不做具体定义，$J$ 可以为任意损失函数），由链式法则：</p>
+<p>$$ \begin{aligned} \cfrac{\partial{J}}{\partial{W^{(l)}}}&amp;=\cfrac{\partial{J}}{\partial{\bold{z}^{(l+1)}}} \cfrac{\partial{\bold{z}^{(l+1)}}}{\partial{W^{(l)}}}=\bold{\delta}^{(l+1)} (\bold{a}^{(l)})^{T} \\ \cfrac{\partial{J}}{\partial{\bold{b}^{(l)}}}&amp;=\cfrac{\partial{J}}{\partial{\bold{z}^{(l+1)}}} \cfrac{\partial{\bold{z}^{(l+1)}}}{\partial{\bold{b}^{(l)}}}=\bold{\delta}^{(l+1)} \end{aligned} $$</p>
+<p>以上，为方便书写，记 $\bold{\delta}^{(l)} \triangleq \cfrac{\partial{J}}{\partial{\bold{z}^{(l)}}}$。考虑矩阵求导维度条件：</p>
+<p>$$\cfrac{\partial{J}}{\partial{W^{(l)}}} \in \R^{s^{(l+1)} \times s^{(l)}}, \bold{\delta}^{(l+1)}=\cfrac{\partial{J}}{\partial{\bold{z}^{(l+1)}}} \in \R^{s^{(l+1)}}$$</p>
+<p>其中，$s^{(l+1)}$ 为第 $l$ 层中间结果与激活值的维度，即 $\bold{a}^{(l+1)}, \bold{z}^{(l+1)} \in \R^{s^{(l+1)}}$。</p>
+<p>所以根据<strong>维度相容原则</strong>增加转置符号调整 $\bold{a}^{(l)}$ 为 $(\bold{a}^{(l)})^{T}$。</p>
+<p>接下来就只需要搞定 $\bold{\delta}^{(l)}$ 即可。那么应该如何求解 $\bold{\delta}^{(l)}$？</p>
+<p>因为在前向传播过程中，链式依赖关系为 $\cdots \to \bold{z}^{(l)} \to \bold{a}^{(l)} \to \bold{z}^{(l+1)} \to \bold{a}^{(l+1)} \to \cdots$，所以可以用递推的方式依次求解：</p>
+<p>$$ \bold{\delta}^{(l)}=\cfrac{\partial{J}}{\partial{\bold{z}^{(l)}}}=\cfrac{\partial{J}}{\partial{\bold{z}^{(l+1)}}} \cfrac{\partial{\bold{z}^{(l+1)}}}{\partial{\bold{a}^{(l)}}} \cfrac{\partial{\bold{a}^{(l)}}}{\partial{\bold{z}^{(l)}}} $$</p>
+<p>考虑矩阵求导维度：</p>
+<p>$$ \begin{aligned} \cfrac{\partial{J}}{\partial{\bold{z}^{(l+1)}}}&amp;=\bold{\delta}^{(l+1)} \in \R^{s^{(l+1)}} \\ \cfrac{\partial{\bold{z}^{(l+1)}}}{\partial{\bold{a}^{(l)}}}&amp;=W^{(l)} \in \R^{s^{(l+1)} \times s^{(l)}} \\ \cfrac{\partial{\bold{a}^{(l)}}}{\partial{\bold{z}^{(l)}}}&amp;=f^{‘}(\bold{z}^{(l)}) \in \R^{s^{(l)}} \end{aligned}$$</p>
+<p>根据<strong>维度相容原则</strong>，调整结果得：</p>
+<p>$$ \bold{\delta}^{(l)}=((W^{(l)})^{T} \bold{\delta}^{(l+1)}) \odot f^{‘}(\bold{z}^{(l)}) $$</p>
+<p>注意，$\bold{a}^{(l)}=f(\bold{z}^{(l)})$ 是逐元素运算，因此 $\cfrac{\partial{\bold{a}^{(l)}}}{\partial{\bold{z}^{(l)}}}=f^{‘}(\bold{z}^{(l)})$ 也是逐元素求导的形式，在公式中使用 <strong>Hadamard 积</strong>。</p>
+<p>至此，反向传播算法的推导已经全部完成，整理整个反向传播过程如下：</p>
+<ul>
+<li>利用前向传播公式进行前向传播计算，得到各层的激活值 $\bold{a}^{(l)}$</li>
+<li>对于输出层（第 $L$ 层），计算 $\bold{\delta}{(L)}$</li>
+<li>对于隐藏层，利用递推公式依次计算 $\bold{\delta}{(l)}$</li>
+<li>计算各层参数 $W^{(l)}, \bold{b}^{(l)}$ 的偏导</li>
+</ul>
+<blockquote>
+<p>前文中曾经提过，反向传播算法作为梯度计算方法，需要配合参数优化算法（譬如随机梯度下降法）才能用于训练神经网络参数，本文并不会介绍关于参数优化算法的内容，但后续我会找时间专门开一篇博客来介绍相关内容。</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>从<strong>维度相容</strong>的角度进行快速矩阵求导遵循“<strong>简单即艺术</strong>”的信条，在数学证明上显然并不严谨，但对于机器学习相关领域的学习者来说已经足以应付大多数情况。当然，对于想要更进一步的人来说，还是需要脚踏实地地去查阅各种相关资料，将矩阵求导方面的知识完全吃透。而搞定了矩阵求导，包括<strong>反向传播算法</strong>在内的许多算法的推导也将迎刃而解。</p>
+<blockquote>
+<p>Ps：本文的主角以其说是反向传播算法，倒不如说是“维度相容”，在整个推导过程中“维度相容”贯通始终。</p>
+</blockquote>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://zhuanlan.zhihu.com/p/22473137" target="_blank" rel="noopener">神经网络反向传播的数学原理</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/25202034" target="_blank" rel="noopener">神经网络反向传播时的梯度到底怎么求？</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/66534632" target="_blank" rel="noopener">神经网络15分钟 - 反向传播到底是怎么传播的？</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/71892752" target="_blank" rel="noopener">前向传播算法和反向传播算法（BP算法）及其推导</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/39195266" target="_blank" rel="noopener">反向传播算法推导-全连接神经网络</a></p>
+<!-- Q.E.D. --><script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script></div><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">此路是我开，留下买路财 [ 狗头 ]</div><div id="qr" style="display:none;"><div style="display:inline-block"><a href="/images/alipay.jpg"><img loading="lazy" src="/images/alipay.jpg" alt="支付宝" title="支付宝"></a><div><span style="color:#00A3EE"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-alipay-line"></use></svg></span></div></div><div style="display:inline-block"><a href="/images/qq-pay.jpg"><img loading="lazy" src="/images/qq-pay.jpg" alt="QQ 支付" title="QQ 支付"></a><div><span style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></span></div></div><div style="display:inline-block"><a href="/images/wechat-pay.jpg"><img loading="lazy" src="/images/wechat-pay.jpg" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-wechat-pay-line"></use></svg></span></div></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>原子态</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://atomicoo.com/mathematics/principle-of-back-propagation/" title="【数学天坑】之反向传播算法数学原理">https://atomicoo.com/mathematics/principle-of-back-propagation/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></section></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/efficiency/gif-super-skills-of-excel/" rel="prev" title="【转载】GIF 图示：Excel 超强技巧"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">【转载】GIF 图示：Excel 超强技巧</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/mathematics/matrix-vector-derivation-4/" rel="next" title="【数学天坑】之矩阵/向量求导（四）"><span class="post-nav-text">【数学天坑】之矩阵/向量求导（四）</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div id="comment"><div class="comment-tooltip text-center"><span>重要评论建议跳转 GitHub Issues 发布</span><br><span>每篇文章的首个评论需要先根据 Comment 模板创建相应的 Issue</span><br><span>请避免创建重复的 Issue，感谢配合</span><br><a class="hty-button hty-button--raised" id="github-issues" href="https://github.com/atomicoo/atomicoo.github.io/issues?q=is:issue+【数学天坑】之反向传播算法数学原理" target="_blank" rel="noopener">GitHub Issues</a></div><div id="valine-container"></div><script src="https://cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script><script>function initValine() {
+  const valineConfig = {"enable":true,"appId":"frjzlYEWNDPLkxagtOz0FWFe-9Nh9j0Va","appKey":"gK2710zgTWTS3C6UchnWhQHd","placeholder":"大佬们缺捡肥皂的吗？_(:з」∠)_","visitor":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"avatar":null,"pageSize":10,"highlight":true,"el":"#valine-container","lang":"zh-cn"}
+  valineConfig.path = window.location.pathname
+  new Valine(valineConfig)
+}
+setTimeout(initValine, 1000)</script></div></main><footer class="sidebar-translate" id="footer"><div class="beian"><a rel="noopener" href="http://www.beian.miit.gov.cn" target="_blank">闽ICP备20015372号</a></div><div class="copyright"><span>&copy; 2020 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> 原子态</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v4.2.1</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v0.9.1</span></div></footer><a class="hty-icon-button" id="goUp" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><a class="popup-trigger hty-icon-button icon-search" id="search" href="javascript:;" title="搜索"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-search-line"></use></svg></span></a><script>window.addEventListener("DOMContentLoaded", () => {
+  // Handle and trigger popup window
+  document.querySelector(".popup-trigger").addEventListener("click", () => {
+    document.querySelector(".popup").classList.add("show");
+    setTimeout(() => {
+      document.querySelector(".search-input").focus();
+    }, 100);
+  });
+
+  // Monitor main search box
+  const onPopupClose = () => {
+    document.querySelector(".popup").classList.remove("show");
+  };
+
+  document.querySelector(".popup-btn-close").addEventListener("click", () => {
+    onPopupClose();
+  });
+
+  window.addEventListener("keyup", event => {
+    if (event.key === "Escape") {
+      onPopupClose();
+    }
+  });
+});
+</script><script defer src="https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script><script defer src="https://cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script><script defer src="/js/search/algolia-search.js"></script><div class="popup search-popup"><div class="search-header"><span class="popup-btn-close close-icon hty-icon-button"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close-line"></use></svg></span></div><div class="search-input-container"></div><div class="algolia-results"><div id="algolia-stats"></div><div id="algolia-hits"></div><div class="algolia-pagination" id="algolia-pagination"></div></div></div></div><script defer src="/js/utils.js"></script><script defer src="/js/hexo-theme-yun.js"></script></body></html>

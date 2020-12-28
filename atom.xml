@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>原子态</title>
+  <icon>https://atomicoo.com/favicon.png</icon>
+  <subtitle>Atomicoo&#39;s</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://atomicoo.com/"/>
+  <updated>2020-08-20T17:43:53.000Z</updated>
+  <id>https://atomicoo.com/</id>
+  
+  <author>
+    <name>原子态</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PowerPoint 从入门到跑路</title>
+    <link href="https://atomicoo.com/efficiency/learning-ppt-from-scratch/"/>
+    <id>https://atomicoo.com/efficiency/learning-ppt-from-scratch/</id>
+    <published>2020-08-20T17:43:53.000Z</published>
+    <updated>2020-08-20T17:43:53.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;自查。【秋叶 Office 三合一课程之 PowerPoint 篇】的学习笔记。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高效" scheme="https://atomicoo.com/categories/%E9%AB%98%E6%95%88/"/>
+    
+    
+      <category term="Office" scheme="https://atomicoo.com/tags/Office/"/>
+    
+      <category term="PowerPoint" scheme="https://atomicoo.com/tags/PowerPoint/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【转载】GIF 图示：Excel 超强技巧</title>
+    <link href="https://atomicoo.com/efficiency/gif-super-skills-of-excel/"/>
+    <id>https://atomicoo.com/efficiency/gif-super-skills-of-excel/</id>
+    <published>2020-08-17T03:02:53.000Z</published>
+    <updated>2020-08-17T03:02:53.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;Excel 超强技巧，看 GIF 图秒懂。Mark 一下方便以后查看。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="高效" scheme="https://atomicoo.com/categories/%E9%AB%98%E6%95%88/"/>
+    
+    
+      <category term="Excel" scheme="https://atomicoo.com/tags/Excel/"/>
+    
+      <category term="转载" scheme="https://atomicoo.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【数学天坑】之反向传播算法数学原理</title>
+    <link href="https://atomicoo.com/mathematics/principle-of-back-propagation/"/>
+    <id>https://atomicoo.com/mathematics/principle-of-back-propagation/</id>
+    <published>2020-08-10T09:46:13.000Z</published>
+    <updated>2020-08-10T09:46:13.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;神经网络的训练主要由三个部分组成：1) 网络模型；2) 损失函数；3) 参数学习算法。&lt;/p&gt;
+&lt;p&gt;我们今天的主角，&lt;strong&gt;反向传播算法&lt;/strong&gt;（Back Propagation Algorithm，BP Algorithm），常与参数优化算法（譬如梯度下降法等）结合使用，属于参数学习算法的一部分（或者说是参数学习算法的好搭档，取决于你怎么理解“参数学习算法”这一概念）。该算法会对网络中所有权重计算损失函数的梯度，并反馈给参数优化算法用以更新权重。&lt;/p&gt;
+&lt;p&gt;对于反向传播算法，有两个常见的误区在这里澄清一下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;反向传播算法是&lt;strong&gt;梯度计算方法&lt;/strong&gt;，而不是参数学习算法&lt;/li&gt;
+&lt;li&gt;反向传播算法理论上可以用于计算&lt;strong&gt;任何函数&lt;/strong&gt;的梯度，而不是仅仅用于多层神经网络&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本文会从“&lt;strong&gt;维度相容&lt;/strong&gt;”的角度介绍快速矩阵求导和反向传播算法。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="数学研究" scheme="https://atomicoo.com/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/"/>
+    
+      <category term="信息时代" scheme="https://atomicoo.com/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/%E4%BF%A1%E6%81%AF%E6%97%B6%E4%BB%A3/"/>
+    
+    
+      <category term="数学" scheme="https://atomicoo.com/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+      <category term="神经网络" scheme="https://atomicoo.com/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    
+      <category term="BP算法" scheme="https://atomicoo.com/tags/BP%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【数学天坑】之矩阵/向量求导（四）</title>
+    <link href="https://atomicoo.com/mathematics/matrix-vector-derivation-4/"/>
+    <id>https://atomicoo.com/mathematics/matrix-vector-derivation-4/</id>
+    <published>2020-08-08T16:33:42.000Z</published>
+    <updated>2020-08-08T16:33:42.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;这是【数学天坑】系列之矩阵/向量求导的第四部分。&lt;/p&gt;
+&lt;p&gt;在上一篇文章的总结部分提到过一点，微分法虽然很大程度上避免了定义法的局限性，但在面对复杂链式求导的情况时仍然会很麻烦，因此还需要一种更优的方法，那就是：&lt;strong&gt;链式求导法&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;链式求导法，对于在机器学习中可能遇到的绝大多数复杂链式求导，我们只需记忆一些常用的求导结果，然后再利用链式法则来求解即可。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="数学研究" scheme="https://atomicoo.com/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/"/>
+    
+      <category term="信息时代" scheme="https://atomicoo.com/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/%E4%BF%A1%E6%81%AF%E6%97%B6%E4%BB%A3/"/>
+    
+    
+      <category term="数学" scheme="https://atomicoo.com/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+      <category term="机器学习" scheme="https://atomicoo.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="矩阵求导" scheme="https://atomicoo.com/tags/%E7%9F%A9%E9%98%B5%E6%B1%82%E5%AF%BC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【数学天坑】之矩阵/向量求导（三）</title>
+    <link href="https://atomicoo.com/mathematics/matrix-vector-derivation-3/"/>
+    <id>https://atomicoo.com/mathematics/matrix-vector-derivation-3/</id>
+    <published>2020-08-08T02:34:23.000Z</published>
+    <updated>2020-08-08T02:34:23.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;这是【数学天坑】系列之矩阵/向量求导的第三部分。&lt;/p&gt;
+&lt;p&gt;在前两篇文章中，已经介绍了矩阵/向量求导的定义、求导布局以及定义法求导的内容，同时通过几个例子说明了定义法求导的局限性，因此我们需要寻找一种更优的方法来完成矩阵/向量求导的任务。这篇博客将从导数与微分的关系出发，引出矩阵求导的&lt;strong&gt;微分法&lt;/strong&gt;。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="数学研究" scheme="https://atomicoo.com/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/"/>
+    
+      <category term="信息时代" scheme="https://atomicoo.com/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/%E4%BF%A1%E6%81%AF%E6%97%B6%E4%BB%A3/"/>
+    
+    
+      <category term="数学" scheme="https://atomicoo.com/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+      <category term="机器学习" scheme="https://atomicoo.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="矩阵求导" scheme="https://atomicoo.com/tags/%E7%9F%A9%E9%98%B5%E6%B1%82%E5%AF%BC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【数学天坑】之矩阵/向量求导（二）</title>
+    <link href="https://atomicoo.com/mathematics/matrix-vector-derivation-2/"/>
+    <id>https://atomicoo.com/mathematics/matrix-vector-derivation-2/</id>
+    <published>2020-08-07T09:06:54.000Z</published>
+    <updated>2020-08-07T09:06:54.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;这是【数学天坑】系列博客的第二篇，或者说是开篇的第二部分。&lt;/p&gt;
+&lt;p&gt;对于矩阵/向量求导，哪怕只是机器学习中会涉及到的部分，显然也不是一篇博客能搞定的，再加上我对自己博客的期望是&lt;strong&gt;“短小精悍”&lt;/strong&gt;，即在文章比较简短的前提下确保每次都完整地记录下自己想要说明的数个知识点（这样做最大的好处就是每篇博客都能用碎片时间看完，而碎片化阅读几乎是现在绝大多数人的常态），所以矩阵/向量求导部分我会分成几篇博客来完成。&lt;/p&gt;
+&lt;p&gt;本篇将搞定&lt;strong&gt;定义法&lt;/strong&gt;求导的部分。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="数学研究" scheme="https://atomicoo.com/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/"/>
+    
+      <category term="信息时代" scheme="https://atomicoo.com/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/%E4%BF%A1%E6%81%AF%E6%97%B6%E4%BB%A3/"/>
+    
+    
+      <category term="数学" scheme="https://atomicoo.com/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+      <category term="机器学习" scheme="https://atomicoo.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="矩阵求导" scheme="https://atomicoo.com/tags/%E7%9F%A9%E9%98%B5%E6%B1%82%E5%AF%BC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【数学天坑】之矩阵/向量求导（一）</title>
+    <link href="https://atomicoo.com/mathematics/matrix-vector-derivation-1/"/>
+    <id>https://atomicoo.com/mathematics/matrix-vector-derivation-1/</id>
+    <published>2020-08-06T06:49:48.000Z</published>
+    <updated>2020-08-06T06:49:48.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;【数学天坑】系列博客的开篇。本系列主要作为接下来一段时间自己恶补荒废多年数学的记录与分享。这么多年下来挖出的“天坑”显然不是一朝一夕能够填上的，只能送给自己八个字——&lt;strong&gt;“戒骄戒躁、脚踏实地”&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;矩阵/向量求导在包括机器学习在内的许多领域都有着广泛的使用，但对于这部分知识感jio自己一直都处于一种比较懵逼的状态，所以有了这篇博客。因为鄙人是菜鸡程序猿一枚，并不需要像数学大佬那样钻研得非常深入，所以本文只会涉及比较浅层的部分，主要为机器学习相关的矩阵/向量求导，旨在快速掌握矩阵/向量求导法则。&lt;/p&gt;
+&lt;p&gt;本篇主要介绍矩阵&lt;strong&gt;求导定义&lt;/strong&gt;及&lt;strong&gt;求导布局&lt;/strong&gt;。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="数学研究" scheme="https://atomicoo.com/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/"/>
+    
+      <category term="信息时代" scheme="https://atomicoo.com/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/%E4%BF%A1%E6%81%AF%E6%97%B6%E4%BB%A3/"/>
+    
+    
+      <category term="数学" scheme="https://atomicoo.com/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+      <category term="机器学习" scheme="https://atomicoo.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="矩阵求导" scheme="https://atomicoo.com/tags/%E7%9F%A9%E9%98%B5%E6%B1%82%E5%AF%BC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>理解语言模型 Language Model</title>
+    <link href="https://atomicoo.com/mathematics/understanding-language-model/"/>
+    <id>https://atomicoo.com/mathematics/understanding-language-model/</id>
+    <published>2020-07-16T07:57:53.000Z</published>
+    <updated>2020-07-16T07:57:53.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;语言模型，在百度百科中的描述是：&lt;em&gt;根据语言客观事实而进行的语言抽象数学建模，是一种对应关系。语言模型与语言客观事实之间的关系，如同数学上的抽象直线与具体直线之间的关系&lt;/em&gt;。在我看来，语言模型本质上其实是在解决这样一个问题：&lt;strong&gt;语句是否合理&lt;/strong&gt;（更直白的说法就是，说的是不是人话 &lt;span class=&quot;github-emoji&quot; style=&quot;color: transparent;background:no-repeat url(https://github.githubassets.com/images/icons/emoji/unicode/1f60f.png?v8) center/contain&quot; data-src=&quot;https://github.githubassets.com/images/icons/emoji/unicode/1f60f.png?v8&quot;&gt;😏&lt;/span&gt;）。本文会介绍语言模型在计算机领域的几个转变的重要节点以及个人的一点小小的理解。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="数学研究" scheme="https://atomicoo.com/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/"/>
+    
+      <category term="信息时代" scheme="https://atomicoo.com/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/%E4%BF%A1%E6%81%AF%E6%97%B6%E4%BB%A3/"/>
+    
+    
+      <category term="神经网络" scheme="https://atomicoo.com/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    
+      <category term="语言模型" scheme="https://atomicoo.com/tags/%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/"/>
+    
+      <category term="N-Grams" scheme="https://atomicoo.com/tags/N-Grams/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【搞定神经网络】循环神经网络篇</title>
+    <link href="https://atomicoo.com/mathematics/understanding-rnn-networks/"/>
+    <id>https://atomicoo.com/mathematics/understanding-rnn-networks/</id>
+    <published>2020-07-14T08:15:48.000Z</published>
+    <updated>2020-07-14T08:15:48.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;【搞定神经网络系列】博客开坑第一篇，循环神经网络篇。&lt;/p&gt;
+&lt;p&gt;循环神经网络（Recurrent Neural Network, RNN）是一类人工神经网络，通常以序列（sequence）数据为输入，在序列的演进方向进行递归（recursion）且所有节点（循环单元）按链式连接。需要注意的是循环神经网络具有记忆性且参数共享。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="数学研究" scheme="https://atomicoo.com/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/"/>
+    
+      <category term="信息时代" scheme="https://atomicoo.com/categories/%E6%95%B0%E5%AD%A6%E7%A0%94%E7%A9%B6/%E4%BF%A1%E6%81%AF%E6%97%B6%E4%BB%A3/"/>
+    
+    
+      <category term="RNN" scheme="https://atomicoo.com/tags/RNN/"/>
+    
+      <category term="神经网络" scheme="https://atomicoo.com/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    
+      <category term="LSTM" scheme="https://atomicoo.com/tags/LSTM/"/>
+    
+      <category term="GRU" scheme="https://atomicoo.com/tags/GRU/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【PyTorch 源码阅读】 torch.nn.Module 篇</title>
+    <link href="https://atomicoo.com/info-science/torch-nn-Module-source-code/"/>
+    <id>https://atomicoo.com/info-science/torch-nn-Module-source-code/</id>
+    <published>2020-07-04T08:52:45.000Z</published>
+    <updated>2020-07-06T08:59:00.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;【PyTorch 源码阅读系列】主要是记录一些阅读 PyTorch 源码时的笔记（&lt;strong&gt;好记性不如烂笔头&lt;/strong&gt;）。事实上 PyTorch 的文档齐全，哪怕你不阅读源码也能够很好地使用它来搭建并训练自己的模型，我之所以选择阅读源码，一方面是为了对 PyTorch 有更深入的理解，另一方面是学习这种优秀的源码也能够帮助自己写出更优雅规范的代码。本文为 &lt;code&gt;torch.nn.Module&lt;/code&gt; 篇，本系列的第一篇。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="信息时代" scheme="https://atomicoo.com/categories/%E4%BF%A1%E6%81%AF%E6%97%B6%E4%BB%A3/"/>
+    
+    
+      <category term="PyTorch" scheme="https://atomicoo.com/tags/PyTorch/"/>
+    
+      <category term="源码阅读" scheme="https://atomicoo.com/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/"/>
+    
+      <category term="Module" scheme="https://atomicoo.com/tags/Module/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【转载】Markdown &amp; HTML 特殊字符转义表</title>
+    <link href="https://atomicoo.com/info-science/markdown-html-special-characters/"/>
+    <id>https://atomicoo.com/info-science/markdown-html-special-characters/</id>
+    <published>2020-07-04T00:39:32.000Z</published>
+    <updated>2020-07-04T00:39:32.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;Markdown &amp;amp; HTML 特殊字符转义表，方便自己后续查询。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="信息时代" scheme="https://atomicoo.com/categories/%E4%BF%A1%E6%81%AF%E6%97%B6%E4%BB%A3/"/>
+    
+    
+      <category term="转载" scheme="https://atomicoo.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="Markdown" scheme="https://atomicoo.com/tags/Markdown/"/>
+    
+      <category term="HTML" scheme="https://atomicoo.com/tags/HTML/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PyTorch 自动微分：Autograd</title>
+    <link href="https://atomicoo.com/info-science/pytorch-auto-diff-autograd/"/>
+    <id>https://atomicoo.com/info-science/pytorch-auto-diff-autograd/</id>
+    <published>2020-07-02T12:26:42.000Z</published>
+    <updated>2020-07-02T12:26:42.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;PyTorch 是一个开源的 Python 机器学习库，提供了两个高级功能：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;具有强大的 GPU 加速的张量计算&lt;/li&gt;
+&lt;li&gt;包含自动求导系统的的深度神经网络（Autograd）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Autograd&lt;/strong&gt; 包是 PyTorch 所有神经网络的核心，为张量上的所有操作提供自动求导机制。它是一个运行时定义的框架，即反向传播是随着对张量的操作来逐步决定的，这也意味着在每个迭代中都是可以不同的。&lt;/p&gt;
+&lt;p&gt;现在由于很多封装好的 API 的存在，导致我们在搭建自己的网络的时候并不需要过多地去关注求导这个问题，但如果能够对这个自动求导机制有所了解的话，对于我们写出更优雅更高效的代码无疑是帮助极大的。本文会简单介绍 PyTorch 的 Autograd 机制。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="信息时代" scheme="https://atomicoo.com/categories/%E4%BF%A1%E6%81%AF%E6%97%B6%E4%BB%A3/"/>
+    
+    
+      <category term="PyTorch" scheme="https://atomicoo.com/tags/PyTorch/"/>
+    
+      <category term="自动微分" scheme="https://atomicoo.com/tags/%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86/"/>
+    
+      <category term="Autograd" scheme="https://atomicoo.com/tags/Autograd/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>建立你自己的个人静态网站</title>
+    <link href="https://atomicoo.com/everything/how-to-build-your-site/"/>
+    <id>https://atomicoo.com/everything/how-to-build-your-site/</id>
+    <published>2020-06-26T02:41:51.000Z</published>
+    <updated>2020-06-26T02:41:51.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;本文介绍如何利用 Github Pages + Hexo 搭建自己的个人博客静态网站&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Github Pages&lt;/strong&gt; 可直接从 Github 仓库创建网站&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Hexo&lt;/strong&gt; 是一个快速、简洁且高效的博客框架&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我会尽量将建立过程讲述清楚，但清楚并不等于事无巨细，一些基础操作（例如注册账号等）会用简单的一句话略过&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="杂项" scheme="https://atomicoo.com/categories/%E6%9D%82%E9%A1%B9/"/>
+    
+    
+      <category term="Github Pages" scheme="https://atomicoo.com/tags/Github-Pages/"/>
+    
+      <category term="Hexo" scheme="https://atomicoo.com/tags/Hexo/"/>
+    
+      <category term="静态网站" scheme="https://atomicoo.com/tags/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/"/>
+    
+  </entry>
+  
+</feed>

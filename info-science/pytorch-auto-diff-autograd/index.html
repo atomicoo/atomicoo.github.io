@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="原子态"><meta name="copyright" content="原子态"><meta name="generator" content="Hexo 4.2.1"><meta name="theme" content="hexo-theme-yun"><title>PyTorch 自动微分：Autograd | 原子态</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;family=Source+Code+Pro&amp;display=swap" media="none" onload="this.media='all'"><script src="//at.alicdn.com/t/font_1140697_stqaphw3j4.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link rel="shortcut icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/css/hexo-theme-yun.css"><link rel="alternate" href="/atom.xml" title="原子态"><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"root":"/","title":"一行代码调一天","version":"0.9.1","anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"algolia":{"appID":"KP7IPEQ96T","apiKey":"4d1c9fc1470aaacb209d4eecaf3b4879","indexName":"my-hexo-blog","hits":{"per_page":8},"labels":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容: ${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><link rel="preconnect" href="https://www.google-analytics.com" crossorigin><link rel="preconnect" href="https://stats.g.doubleclick.net" crossorigin><script async src="https://www.googletagmanager.com/gtag/js?id=UA-170889853-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-170889853-1');</script><meta name="description" content="引言PyTorch 是一个开源的 Python 机器学习库，提供了两个高级功能：  具有强大的 GPU 加速的张量计算 包含自动求导系统的的深度神经网络（Autograd）  Autograd 包是 PyTorch 所有神经网络的核心，为张量上的所有操作提供自动求导机制。它是一个运行时定义的框架，即反向传播是随着对张量的操作来逐步决定的，这也意味着在每个迭代中都是可以不同的。 现在由于很多封装好的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyTorch 自动微分：Autograd">
+<meta property="og:url" content="https://atomicoo.com/info-science/pytorch-auto-diff-autograd/index.html">
+<meta property="og:site_name" content="原子态">
+<meta property="og:description" content="引言PyTorch 是一个开源的 Python 机器学习库，提供了两个高级功能：  具有强大的 GPU 加速的张量计算 包含自动求导系统的的深度神经网络（Autograd）  Autograd 包是 PyTorch 所有神经网络的核心，为张量上的所有操作提供自动求导机制。它是一个运行时定义的框架，即反向传播是随着对张量的操作来逐步决定的，这也意味着在每个迭代中都是可以不同的。 现在由于很多封装好的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/07/04/9PUHp5aoE2JOvLR.jpg">
+<meta property="article:published_time" content="2020-07-02T12:26:42.000Z">
+<meta property="article:modified_time" content="2020-07-02T12:26:42.000Z">
+<meta property="article:author" content="原子态">
+<meta property="article:tag" content="PyTorch">
+<meta property="article:tag" content="自动微分">
+<meta property="article:tag" content="Autograd">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/07/04/9PUHp5aoE2JOvLR.jpg"><script src="/js/ui/mode.js"></script><link rel="alternate" href="/atom.xml" title="原子态" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script defer src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="原子态"><img width="96" loading="lazy" src="/images/avatar.jpg" alt="原子态"></a><div class="site-author-name"><a href="/about/">原子态</a></div><a class="site-name" href="/about/site.html">原子态</a><sub class="site-subtitle">Atomicoo's</sub><div class="site-desciption">“咚！咚！咚！”</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">13</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">5</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">24</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="/atom.xml" title="RSS" target="_blank" style="color:orange"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-rss-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/atomicoo" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/409646386" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-bilibili-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:atomicoo95@gmail.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="Links" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-genderless-line"></use></svg></a><a class="links-item hty-icon-button" href="/girls/" title="Girls" style="color:hotpink"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-women-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计算图"><span class="toc-number">2.</span> <span class="toc-text">计算图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tensor：n-维向量"><span class="toc-number">2.1.</span> <span class="toc-text">Tensor：n 维向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Function：张量运算"><span class="toc-number">2.2.</span> <span class="toc-text">Function：张量运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gradient：方向导数"><span class="toc-number">2.3.</span> <span class="toc-text">Gradient：方向导数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一个实例"><span class="toc-number">3.</span> <span class="toc-text">一个实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="https://atomicoo.com/info-science/pytorch-auto-diff-autograd/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="原子态"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="原子态"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">PyTorch 自动微分：Autograd<a class="post-edit-link" href="https://github.com/atomicoo/atomicoo.github.io/tree/source/source/_posts/info-science/pytorch-auto-diff-autograd.md" target="_blank" title="编辑" rel="noopener"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-edit-line"></use></svg></a></h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2020-07-02 20:26:42" itemprop="dateCreated datePublished" datetime="2020-07-02T20:26:42+08:00">2020-07-02</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">11k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">20 分钟</span></span></span><span class="leancloud_visitors" id="/info-science/pytorch-auto-diff-autograd/" data-flag-title="PyTorch 自动微分：Autograd"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span class="leancloud-visitors-count"></span></span></span><div class="post-classify"><span class="post-category"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span> <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category" href="/categories/%E4%BF%A1%E6%81%AF%E6%97%B6%E4%BB%A3/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">信息时代</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag" href="/tags/PyTorch/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">PyTorch</span></a><a class="tag" href="/tags/%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">自动微分</span></a><a class="tag" href="/tags/Autograd/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">Autograd</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content post-markdown"><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>PyTorch 是一个开源的 Python 机器学习库，提供了两个高级功能：</p>
+<ul>
+<li>具有强大的 GPU 加速的张量计算</li>
+<li>包含自动求导系统的的深度神经网络（Autograd）</li>
+</ul>
+<p><strong>Autograd</strong> 包是 PyTorch 所有神经网络的核心，为张量上的所有操作提供自动求导机制。它是一个运行时定义的框架，即反向传播是随着对张量的操作来逐步决定的，这也意味着在每个迭代中都是可以不同的。</p>
+<p>现在由于很多封装好的 API 的存在，导致我们在搭建自己的网络的时候并不需要过多地去关注求导这个问题，但如果能够对这个自动求导机制有所了解的话，对于我们写出更优雅更高效的代码无疑是帮助极大的。本文会简单介绍 PyTorch 的 Autograd 机制。</p>
+<a id="more"></a>
+
+<h2 id="计算图"><a href="#计算图" class="headerlink" title="计算图"></a>计算图</h2><p>首先我们用一个简单的类比来了解一下什么是<strong>计算图</strong>：可以将计算图想象成一个复杂的管道结构，张量（数据）在其中通过特定的路径从入口向出口缓缓流动（这也就是 TensorFlow 中 <strong>Flow</strong> 的由来），每次张量从入口“流”到出口就表示完成了一次正向传播。在计算图中有两个最重要的元素：<strong>Tensor</strong> 和 <strong>Function</strong>，两者互相连接生成一个有向无环图（计算图），编码了完整的计算历史。</p>
+<h3 id="Tensor：n-维向量"><a href="#Tensor：n-维向量" class="headerlink" title="Tensor：n 维向量"></a>Tensor：n 维向量</h3><p>张量 Tensor 可以理解为 n 维的向量，<code>Tensor</code> 是包中的核心类，通过将某个张量的属性 <code>.requires_grad</code> （默认为 <code>False</code>）设置为 <code>True</code> 可以追踪该张量上发生的所有操作，在完成计算之后可以通过 <code>.backward()</code> 反向传播来自动计算所有<strong>梯度</strong>（Gradient），并累加到 <code>.grad</code> 属性中。这就是 PyTorch 的自动求导。</p>
+<pre class=" language-sh"><code class="language-sh">$ x = torch.ones(2, 2, requires_grad=True); print(x)
+tensor([[1., 1.],
+        [1., 1.]], requires_grad=True)</code></pre>
+<blockquote>
+<p>Note：可以通过调用 <code>.detach()</code> 方法阻止一个张量被追踪，或者通过将代码块包裹在 <code>with torch.no_grad():</code> 中，这点在评估模型时非常实用（因为在模型评估阶段并不需要进行梯度计算）。</p>
+</blockquote>
+<h3 id="Function：张量运算"><a href="#Function：张量运算" class="headerlink" title="Function：张量运算"></a>Function：张量运算</h3><p>在 PyTorch 的自动求导机制中，除了 <code>Tensor</code> 之外，还有另一个类 <code>Function</code> 也是非常重要的。</p>
+<p>Function 指的是在计算图中对张量 Tensor 所进行的运算，譬如加减乘除卷积等。<code>Function</code> 内部有 <code>.forward()</code> 和 <code>.backward()</code> 两个方法，分别用于正向传播与反向传播。</p>
+<p>我们的计算图在做正向传播的时候，除了 <code>.forward()</code> 本身的操作之外，还会自动为反向传播做准备，添加相应的 Function 节点，保存在张量的 <code>.grad_fn</code> 属性中。</p>
+<pre class=" language-sh"><code class="language-sh">$ y = x + 2; print(y)
+tensor([[3., 3.],
+        [3., 3.]], grad_fn=&lt;AddBackward0&gt;)</code></pre>
+<p>在计算图需要反向传播求梯度时只需调用 <code>.backward()</code> 即可。上例中，反向传播时需要做的操作就是 <code>&lt;AddBackward0&gt;</code>。</p>
+<h3 id="Gradient：方向导数"><a href="#Gradient：方向导数" class="headerlink" title="Gradient：方向导数"></a>Gradient：方向导数</h3><p>梯度：方向导数，即函数在该点处沿着该方向变化最快，变化率最大（梯度的模）。</p>
+<h2 id="一个实例"><a href="#一个实例" class="headerlink" title="一个实例"></a>一个实例</h2><p>对自动求导机制有基本的了解之后可以来看一个简单的实例：</p>
+<pre class=" language-sh"><code class="language-sh">l1 = input x w1
+l2 = l1 + w2
+l3 = l1 x w3
+l4 = l2 x l3
+loss = mean(l4)</code></pre>
+<p>可以画出对应的计算图如下：</p>
+<p><img src="https://i.loli.net/2020/07/04/9PUHp5aoE2JOvLR.jpg" alt="1781041624f4c9fb31df04d11dd6a84a.jpg" loading="lazy"></p>
+<blockquote>
+<p>Note：其中 <code>input</code> 张量在实操时 <code>.requires_grad</code> 应设置为 <code>False</code>，并不需要进行追踪（因为在实操中 <code>input</code> 对应的是数据输入，并不是可训练参数，自然无需求导）。</p>
+</blockquote>
+<p>手推结果：</p>
+<pre class=" language-sh"><code class="language-sh">in = [1., 1., 1., 1.]
+w1 = [2., 2., 2., 2.]
+w2 = [3., 3., 3., 3.]
+w3 = [4., 4., 4., 4.]
+l1 = in x w1 = [2., 2., 2., 2.]
+l2 = l1 + w2 = [5., 5., 5., 5.]
+l3 = l1 x w3 = [8., 8., 8., 8.]
+l4 = l2 x l3 = [40., 40., 40., 40.]
+ls = 40.
+
+dls/dl4 = [0.25, 0.25, 0.25, 0.25]
+dl4/dl3 = [5., 5., 5., 5.]
+dl4/dl2 = [8., 8., 8., 8.]
+dl3/dl1 = [4., 4., 4., 4.]
+dl3/dw3 = [2., 2., 2., 2.]
+dl2/dl1 = [1., 1., 1., 1.]
+dl2/dw2 = [1., 1., 1., 1.]
+dl1/dw1 = [1., 1., 1., 1.]
+
+dls/dw3 = dls/dl4 * dl4/dl3 * dl3/dw3 = [2.5, 2.5, 2.5, 2.5]
+dls/dw2 = dls/dl4 * dl4/dl2 * dl2/dw2 = [2.0, 2.0, 2.0, 2.0]
+dls/dw1 = dls/dl4 * dl4/dl3 * dl3/dl1 * dl1/dw1
+        + dls/dl4 * dl4/dl2 * dl2/dl1 * dl1/dw1
+        = [7., 7., 7., 7.]</code></pre>
+<p>验证结果：</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> torch
+
+input <span class="token operator">=</span> torch<span class="token punctuation">.</span>ones<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> requires_grad<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+w1 <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">.</span><span class="token punctuation">,</span> requires_grad<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+w2 <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">.</span><span class="token punctuation">,</span> requires_grad<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+w3 <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">.</span><span class="token punctuation">,</span> requires_grad<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+
+l1 <span class="token operator">=</span> input <span class="token operator">*</span> w1
+l2 <span class="token operator">=</span> l1 <span class="token operator">+</span> w2
+l3 <span class="token operator">=</span> l1 <span class="token operator">*</span> w3
+l4 <span class="token operator">=</span> l2 <span class="token operator">*</span> l3
+loss <span class="token operator">=</span> l4<span class="token punctuation">.</span>mean<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>w1<span class="token punctuation">.</span>data<span class="token punctuation">,</span> w1<span class="token punctuation">.</span>grad<span class="token punctuation">,</span> w1<span class="token punctuation">.</span>grad_fn<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>l1<span class="token punctuation">.</span>data<span class="token punctuation">,</span> l1<span class="token punctuation">.</span>grad<span class="token punctuation">,</span> l1<span class="token punctuation">.</span>grad_fn<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>loss<span class="token punctuation">.</span>data<span class="token punctuation">,</span> loss<span class="token punctuation">.</span>grad<span class="token punctuation">,</span> loss<span class="token punctuation">.</span>grad_fn<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># Out:</span>
+<span class="token comment" spellcheck="true"># tensor(2.)  None  None</span>
+<span class="token comment" spellcheck="true"># tensor([[2., 2.],</span>
+<span class="token comment" spellcheck="true">#         [2., 2.]])  None  &lt;MulBackward0 object at 0x000001A9FC571E48></span>
+<span class="token comment" spellcheck="true"># tensor(40.)  None  &lt;MeanBackward0 object at 0x000001A9FC571E10></span>
+
+loss<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>w1<span class="token punctuation">.</span>grad<span class="token punctuation">,</span> w2<span class="token punctuation">.</span>grad<span class="token punctuation">,</span> w3<span class="token punctuation">.</span>grad<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>l1<span class="token punctuation">.</span>grad<span class="token punctuation">,</span> l2<span class="token punctuation">.</span>grad<span class="token punctuation">,</span> l3<span class="token punctuation">.</span>grad<span class="token punctuation">,</span> l4<span class="token punctuation">.</span>grad<span class="token punctuation">,</span> loss<span class="token punctuation">.</span>grad<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># Out:</span>
+<span class="token comment" spellcheck="true"># tensor(28.)  tensor(8.)  tensor(10.)</span>
+<span class="token comment" spellcheck="true"># None  None  None  None  None</span></code></pre>
+<p>这个例子中给定的参数 <code>w</code> 都只是常数，且涉及的运算都是加减乘除这类简单运算，但换成卷积之类的复杂运算之后原理仍然是一样的，只不过计算过程变得复杂了而已。</p>
+<blockquote>
+<p>Note：可以看到 l1 ~ l4 的 <code>.grad</code> 都为 None，这其实是为了节省内存，所以默认并不会保存中间结果。可以通过调用 <code>tensor.retain_grad()</code> 来进行保存，或者通过调用 <code>tensor.register_hook</code> 来进行输出（并不保存）</p>
+</blockquote>
+<pre class=" language-python"><code class="language-python">l1<span class="token punctuation">.</span>retain_grad<span class="token punctuation">(</span><span class="token punctuation">)</span>
+l1<span class="token punctuation">.</span>register_hook<span class="token punctuation">(</span><span class="token keyword">lambda</span> grad<span class="token punctuation">:</span> <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'l1 grad: '</span><span class="token punctuation">,</span> grad<span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://zhuanlan.zhihu.com/p/67184419" target="_blank" rel="noopener">浅谈 PyTorch 中的 tensor 及使用</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/69294347" target="_blank" rel="noopener">PyTorch 的 Autograd</a></p>
+<p><a href="https://baijiahao.baidu.com/s?id=1659101311176614112&amp;wfr=spider&amp;for=pc" target="_blank" rel="noopener">PyTorch自动求导：Autograd</a></p>
+<p><a href="https://pytorch.org/tutorials/" target="_blank" rel="noopener">PyTorch 官方英文教程</a></p>
+<p><a href="https://pytorch.org/docs/stable/index.html" target="_blank" rel="noopener">PyTorch 官方英文文档</a></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script></div><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">此路是我开，留下买路财 [ 狗头 ]</div><div id="qr" style="display:none;"><div style="display:inline-block"><a href="/images/alipay.jpg"><img loading="lazy" src="/images/alipay.jpg" alt="支付宝" title="支付宝"></a><div><span style="color:#00A3EE"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-alipay-line"></use></svg></span></div></div><div style="display:inline-block"><a href="/images/qq-pay.jpg"><img loading="lazy" src="/images/qq-pay.jpg" alt="QQ 支付" title="QQ 支付"></a><div><span style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></span></div></div><div style="display:inline-block"><a href="/images/wechat-pay.jpg"><img loading="lazy" src="/images/wechat-pay.jpg" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-wechat-pay-line"></use></svg></span></div></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>原子态</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://atomicoo.com/info-science/pytorch-auto-diff-autograd/" title="PyTorch 自动微分：Autograd">https://atomicoo.com/info-science/pytorch-auto-diff-autograd/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></section></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/info-science/markdown-html-special-characters/" rel="prev" title="【转载】Markdown &amp; HTML 特殊字符转义表"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">【转载】Markdown &amp; HTML 特殊字符转义表</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/everything/how-to-build-your-site/" rel="next" title="建立你自己的个人静态网站"><span class="post-nav-text">建立你自己的个人静态网站</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div id="comment"><div class="comment-tooltip text-center"><span>重要评论建议跳转 GitHub Issues 发布</span><br><span>每篇文章的首个评论需要先根据 Comment 模板创建相应的 Issue</span><br><span>请避免创建重复的 Issue，感谢配合</span><br><a class="hty-button hty-button--raised" id="github-issues" href="https://github.com/atomicoo/atomicoo.github.io/issues?q=is:issue+PyTorch 自动微分：Autograd" target="_blank" rel="noopener">GitHub Issues</a></div><div id="valine-container"></div><script src="https://cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script><script>function initValine() {
+  const valineConfig = {"enable":true,"appId":"frjzlYEWNDPLkxagtOz0FWFe-9Nh9j0Va","appKey":"gK2710zgTWTS3C6UchnWhQHd","placeholder":"大佬们缺捡肥皂的吗？_(:з」∠)_","visitor":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"avatar":null,"pageSize":10,"highlight":true,"el":"#valine-container","lang":"zh-cn"}
+  valineConfig.path = window.location.pathname
+  new Valine(valineConfig)
+}
+setTimeout(initValine, 1000)</script></div></main><footer class="sidebar-translate" id="footer"><div class="beian"><a rel="noopener" href="http://www.beian.miit.gov.cn" target="_blank">闽ICP备20015372号</a></div><div class="copyright"><span>&copy; 2020 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> 原子态</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v4.2.1</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v0.9.1</span></div></footer><a class="hty-icon-button" id="goUp" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><a class="popup-trigger hty-icon-button icon-search" id="search" href="javascript:;" title="搜索"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-search-line"></use></svg></span></a><script>window.addEventListener("DOMContentLoaded", () => {
+  // Handle and trigger popup window
+  document.querySelector(".popup-trigger").addEventListener("click", () => {
+    document.querySelector(".popup").classList.add("show");
+    setTimeout(() => {
+      document.querySelector(".search-input").focus();
+    }, 100);
+  });
+
+  // Monitor main search box
+  const onPopupClose = () => {
+    document.querySelector(".popup").classList.remove("show");
+  };
+
+  document.querySelector(".popup-btn-close").addEventListener("click", () => {
+    onPopupClose();
+  });
+
+  window.addEventListener("keyup", event => {
+    if (event.key === "Escape") {
+      onPopupClose();
+    }
+  });
+});
+</script><script defer src="https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script><script defer src="https://cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script><script defer src="/js/search/algolia-search.js"></script><div class="popup search-popup"><div class="search-header"><span class="popup-btn-close close-icon hty-icon-button"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close-line"></use></svg></span></div><div class="search-input-container"></div><div class="algolia-results"><div id="algolia-stats"></div><div id="algolia-hits"></div><div class="algolia-pagination" id="algolia-pagination"></div></div></div></div><script defer src="/js/utils.js"></script><script defer src="/js/hexo-theme-yun.js"></script></body></html>

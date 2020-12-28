@@ -1,0 +1,354 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="原子态"><meta name="copyright" content="原子态"><meta name="generator" content="Hexo 4.2.1"><meta name="theme" content="hexo-theme-yun"><title>建立你自己的个人静态网站 | 原子态</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;family=Source+Code+Pro&amp;display=swap" media="none" onload="this.media='all'"><script src="//at.alicdn.com/t/font_1140697_stqaphw3j4.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link rel="shortcut icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/css/hexo-theme-yun.css"><link rel="alternate" href="/atom.xml" title="原子态"><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"root":"/","title":"一行代码调一天","version":"0.9.1","anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"algolia":{"appID":"KP7IPEQ96T","apiKey":"4d1c9fc1470aaacb209d4eecaf3b4879","indexName":"my-hexo-blog","hits":{"per_page":8},"labels":{"input_placeholder":"搜索文章","hits_empty":"找不到您查询的内容: ${query}","hits_stats":"找到 ${hits} 条结果，用时 ${time} 毫秒"}},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><link rel="preconnect" href="https://www.google-analytics.com" crossorigin><link rel="preconnect" href="https://stats.g.doubleclick.net" crossorigin><script async src="https://www.googletagmanager.com/gtag/js?id=UA-170889853-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-170889853-1');</script><meta name="description" content="引言本文介绍如何利用 Github Pages + Hexo 搭建自己的个人博客静态网站  Github Pages 可直接从 Github 仓库创建网站  Hexo 是一个快速、简洁且高效的博客框架   我会尽量将建立过程讲述清楚，但清楚并不等于事无巨细，一些基础操作（例如注册账号等）会用简单的一句话略过">
+<meta property="og:type" content="article">
+<meta property="og:title" content="建立你自己的个人静态网站">
+<meta property="og:url" content="https://atomicoo.com/everything/how-to-build-your-site/index.html">
+<meta property="og:site_name" content="原子态">
+<meta property="og:description" content="引言本文介绍如何利用 Github Pages + Hexo 搭建自己的个人博客静态网站  Github Pages 可直接从 Github 仓库创建网站  Hexo 是一个快速、简洁且高效的博客框架   我会尽量将建立过程讲述清楚，但清楚并不等于事无巨细，一些基础操作（例如注册账号等）会用简单的一句话略过">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/06/26/n6LOXk3E2V5crIM.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/26/f5aTZ3YiIeWhF2b.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/26/xGcBhFer9gVDXMK.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/26/mHgpUCWE6PaAnqS.png">
+<meta property="og:image" content="https://i.loli.net/2020/06/26/wuy1atskNe4HbZx.png">
+<meta property="article:published_time" content="2020-06-26T02:41:51.000Z">
+<meta property="article:modified_time" content="2020-06-26T02:41:51.000Z">
+<meta property="article:author" content="原子态">
+<meta property="article:tag" content="Github Pages">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="静态网站">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/06/26/n6LOXk3E2V5crIM.png"><script src="/js/ui/mode.js"></script><link rel="alternate" href="/atom.xml" title="原子态" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script defer src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="原子态"><img width="96" loading="lazy" src="/images/avatar.jpg" alt="原子态"></a><div class="site-author-name"><a href="/about/">原子态</a></div><a class="site-name" href="/about/site.html">原子态</a><sub class="site-subtitle">Atomicoo's</sub><div class="site-desciption">“咚！咚！咚！”</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">13</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">5</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">24</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="/atom.xml" title="RSS" target="_blank" style="color:orange"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-rss-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/atomicoo" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/409646386" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-bilibili-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:atomicoo95@gmail.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="Links" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-genderless-line"></use></svg></a><a class="links-item hty-icon-button" href="/girls/" title="Girls" style="color:hotpink"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-women-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建"><span class="toc-number">2.</span> <span class="toc-text">搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Node-js-和-Git"><span class="toc-number">2.1.</span> <span class="toc-text">Node.js 和 Git</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Node-JS"><span class="toc-number">2.1.1.</span> <span class="toc-text">Node.JS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Git-Github"><span class="toc-number">2.1.2.</span> <span class="toc-text">Git&#x2F;Github</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Github-仓库"><span class="toc-number">2.2.</span> <span class="toc-text">Github 仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-配置博客"><span class="toc-number">2.3.</span> <span class="toc-text">Hexo 配置博客</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化-Hexo"><span class="toc-number">2.3.1.</span> <span class="toc-text">初始化 Hexo</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#静态网页"><span class="toc-number">2.3.2.</span> <span class="toc-text">静态网页</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hexo-主题（可选）"><span class="toc-number">2.3.3.</span> <span class="toc-text">Hexo 主题（可选）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署"><span class="toc-number">3.</span> <span class="toc-text">部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#部署到-Github"><span class="toc-number">3.1.</span> <span class="toc-text">部署到 Github</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#备份与自动部署"><span class="toc-number">3.2.</span> <span class="toc-text">备份与自动部署</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#源码备份"><span class="toc-number">3.2.1.</span> <span class="toc-text">源码备份</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自动部署"><span class="toc-number">3.2.2.</span> <span class="toc-text">自动部署</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写作"><span class="toc-number">4.</span> <span class="toc-text">写作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文章"><span class="toc-number">4.1.</span> <span class="toc-text">文章</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#布局（Layout）"><span class="toc-number">4.1.1.</span> <span class="toc-text">布局（Layout）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文件名称"><span class="toc-number">4.1.2.</span> <span class="toc-text">文件名称</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#草稿（Draft）"><span class="toc-number">4.1.3.</span> <span class="toc-text">草稿（Draft）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模板（Scaffold）"><span class="toc-number">4.1.4.</span> <span class="toc-text">模板（Scaffold）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Front-matter"><span class="toc-number">4.2.</span> <span class="toc-text">Front-matter</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分类和标签"><span class="toc-number">4.2.1.</span> <span class="toc-text">分类和标签</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标签插件"><span class="toc-number">4.3.</span> <span class="toc-text">标签插件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#引用块"><span class="toc-number">4.3.1.</span> <span class="toc-text">引用块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码块"><span class="toc-number">4.3.2.</span> <span class="toc-text">代码块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他"><span class="toc-number">4.3.3.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#文章摘要和截断"><span class="toc-number">4.3.4.</span> <span class="toc-text">文章摘要和截断</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#资源文件夹"><span class="toc-number">4.4.</span> <span class="toc-text">资源文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据文件夹"><span class="toc-number">4.5.</span> <span class="toc-text">数据文件夹</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="https://atomicoo.com/everything/how-to-build-your-site/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="原子态"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="原子态"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">建立你自己的个人静态网站<a class="post-edit-link" href="https://github.com/atomicoo/atomicoo.github.io/tree/source/source/_posts/everything/how-to-build-your-site.md" target="_blank" title="编辑" rel="noopener"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-edit-line"></use></svg></a></h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2020-06-26 10:41:51" itemprop="dateCreated datePublished" datetime="2020-06-26T10:41:51+08:00">2020-06-26</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">16k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">29 分钟</span></span></span><span class="leancloud_visitors" id="/everything/how-to-build-your-site/" data-flag-title="建立你自己的个人静态网站"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span class="leancloud-visitors-count"></span></span></span><div class="post-classify"><span class="post-category"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span> <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category" href="/categories/%E6%9D%82%E9%A1%B9/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">杂项</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag" href="/tags/Github-Pages/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">Github Pages</span></a><a class="tag" href="/tags/Hexo/" style="--text-color:#0E83CD"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">Hexo</span></a><a class="tag" href="/tags/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">静态网站</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content post-markdown"><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>本文介绍如何利用 Github Pages + Hexo 搭建自己的个人博客静态网站</p>
+<ul>
+<li><p><strong>Github Pages</strong> 可直接从 Github 仓库创建网站</p>
+</li>
+<li><p><strong>Hexo</strong> 是一个快速、简洁且高效的博客框架</p>
+</li>
+</ul>
+<p>我会尽量将建立过程讲述清楚，但清楚并不等于事无巨细，一些基础操作（例如注册账号等）会用简单的一句话略过</p>
+<a id="more"></a>
+
+<h2 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h2><h3 id="Node-js-和-Git"><a href="#Node-js-和-Git" class="headerlink" title="Node.js 和 Git"></a>Node.js 和 Git</h3><h4 id="Node-JS"><a href="#Node-JS" class="headerlink" title="Node.JS"></a>Node.JS</h4><p>下载 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.JS</a> 并安装</p>
+<p>验证安装</p>
+<pre class=" language-sh"><code class="language-sh">node -v
+npm -v</code></pre>
+<p>国内可使用 <code>cnpm</code> 加速</p>
+<pre class=" language-sh"><code class="language-sh">npm install -g cnpm --registry=https://registry.npm.taobao.org</code></pre>
+<p>验证安装</p>
+<pre class=" language-sh"><code class="language-sh">cnpm -v</code></pre>
+<h4 id="Git-Github"><a href="#Git-Github" class="headerlink" title="Git/Github"></a>Git/Github</h4><p>下载 <a href="https://git-scm.com/" target="_blank" rel="noopener">Git</a> 并安装</p>
+<p>验证安装</p>
+<pre class=" language-sh"><code class="language-sh">git --version</code></pre>
+<h3 id="Github-仓库"><a href="#Github-仓库" class="headerlink" title="Github 仓库"></a>Github 仓库</h3><p>创建 Github 仓库，仓库名称格式为 <code>&lt;username&gt;.github.io</code></p>
+<p><img src="https://i.loli.net/2020/06/26/n6LOXk3E2V5crIM.png" alt="1592987275265" loading="lazy"></p>
+<p>并在 setting 中勾选 githubpage</p>
+<p><img src="https://i.loli.net/2020/06/26/f5aTZ3YiIeWhF2b.png" alt="1592987502534.png" loading="lazy"></p>
+<p>完成后即可通过 <a href="https://atomicoo.github.io/" target="_blank" rel="noopener"><code>https://&lt;username&gt;.github.io/</code></a> 访问</p>
+<h3 id="Hexo-配置博客"><a href="#Hexo-配置博客" class="headerlink" title="Hexo 配置博客"></a>Hexo 配置博客</h3><p>Github Pages 支持 Jelly 和 Hexo 来搭建静态界面，此处选择使用 Hexo 搭建</p>
+<h4 id="初始化-Hexo"><a href="#初始化-Hexo" class="headerlink" title="初始化 Hexo"></a>初始化 Hexo</h4><p>安装 Hexo 并初始化项目，参考 <a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">Hexo 官方文档</a></p>
+<pre class=" language-sh"><code class="language-sh">cnpm install hexo-cli -g
+hexo init [target-dir]
+cd [target-dir]
+cnpm install</code></pre>
+<p>完成后指定文件夹目录结构</p>
+<pre class=" language-sh"><code class="language-sh">.
+├── _config.yml
+├── package.json
+├── scaffolds
+├── source
+|   ├── _drafts
+|   └── _posts
+└── themes</code></pre>
+<h4 id="静态网页"><a href="#静态网页" class="headerlink" title="静态网页"></a>静态网页</h4><p>生成静态网页，此命令会在项目根目录下生成 <code>public</code> 文件夹</p>
+<pre class=" language-sh"><code class="language-sh">hexo generate</code></pre>
+<p>本地运行静态网页</p>
+<pre class=" language-sh"><code class="language-sh">hexo server</code></pre>
+<p>首次运行时会先自动安装 <code>hexo-server</code>，也可手动安装</p>
+<pre class=" language-sh"><code class="language-sh">cnpm install hexo-server --save</code></pre>
+<p>启动 Hexo 项目后即可通过 <code>http://localhost:4000</code> 进行本地访问</p>
+<p><img src="https://i.loli.net/2020/06/26/xGcBhFer9gVDXMK.png" alt="1592989535582.png" loading="lazy"></p>
+<h4 id="Hexo-主题（可选）"><a href="#Hexo-主题（可选）" class="headerlink" title="Hexo 主题（可选）"></a>Hexo 主题（可选）</h4><p>Hexo 默认提供的 <a href="https://github.com/hexojs/hexo-theme-landscape" target="_blank" rel="noopener">hexo-theme-landscape</a> 主题样式简单、功能较少，大多数人都会根据自己的喜好使用其他主题</p>
+<p>这里列几个我认为比较有意思的主题：<a href="https://github.com/zhwangart/hexo-theme-ocean" target="_blank" rel="noopener">hexo-theme-ocean</a>、<a href="https://github.com/shixiaohu2206/hexo-theme-huhu" target="_blank" rel="noopener">hexo-theme-huhu</a>、<a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="noopener">hexo-theme-fluid</a>、<a href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank" rel="noopener">hexo-theme-yun</a>。此外还可以在 <a href="https://hexo.io/themes/" target="_blank" rel="noopener">Themes | Hexo</a> 发现更多主题或者根据自己的审美偏好开发属于自己的主题（可以参考：<a href="https://www.yunyoujun.cn/note/make-hexo-theme-yun/" target="_blank" rel="noopener">hexo-theme-yun 制作笔记</a>）</p>
+<p>这里选用最后一个 <a href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank" rel="noopener">hexo-theme-yun</a> 来示范如何使用，<a href="#">展示效果</a></p>
+<p>下载主题，在根目录下运行命令</p>
+<pre class=" language-sh"><code class="language-sh">git clone -b master https://github.com/YunYouJun/hexo-theme-yun themes/yun</code></pre>
+<p>编辑 Hexo 配置文件 <code>_config.yml</code></p>
+<pre class=" language-sh"><code class="language-sh">- theme: landscape
++ theme: yun</code></pre>
+<p>需要注意的是，有的主题是有额外的依赖要求的，比如此次示范的主题由于使用了 <code>hexo-render-pug</code> 和 <code>hexo-renderer-stylus</code>，需要运行命令安装</p>
+<pre class=" language-sh"><code class="language-sh">cnpm install hexo-render-pug hexo-renderer-stylus --save</code></pre>
+<p>该主题的详细使用文档 <a href="https://yun.yunyoujun.cn/" target="_blank" rel="noopener">Docs of Hexo-Theme-Yun</a>，可根据文档进行额外的配置，定制出符合自己喜好的主题</p>
+<p>完成后运行 <code>hexo server</code> 重新启动即可看到一个不同主题风格的页面</p>
+<p><img src="https://i.loli.net/2020/06/26/mHgpUCWE6PaAnqS.png" alt="1593085668274.png" loading="lazy"></p>
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><h3 id="部署到-Github"><a href="#部署到-Github" class="headerlink" title="部署到 Github"></a>部署到 Github</h3><p>需要先安装部署插件 <code>hexo-deploy-git</code></p>
+<pre class=" language-sh"><code class="language-sh">cnpm install hexo-deployer-git --save</code></pre>
+<p>然后编辑配置文件 <code>_config.yml</code> 添加内容</p>
+<pre class=" language-sh"><code class="language-sh">deploy:
+  type: git
+  repo: git@github.com:zhanghanlun/zhanghanlun.github.io.git
+  branch: master</code></pre>
+<p>最后通过命令部署</p>
+<pre class=" language-sh"><code class="language-sh">hexo deploy
+or
+hexo clean && hexo deploy</code></pre>
+<p>保存，部署，完成后即可通过 <a href="https://atomicoo.github.io/" target="_blank" rel="noopener"><code>https://atomicoo.github.io/</code></a> 访问</p>
+<h3 id="备份与自动部署"><a href="#备份与自动部署" class="headerlink" title="备份与自动部署"></a>备份与自动部署</h3><h4 id="源码备份"><a href="#源码备份" class="headerlink" title="源码备份"></a>源码备份</h4><p>以上步骤已将静态文件部署到 Github 上了，但最好将源码也备份一份以防万一（比如误删源码的情况等）</p>
+<p>创建新分支 <code>source</code> 用于备份源码，仅首次</p>
+<pre class=" language-sh"><code class="language-sh">git init
+git branch source
+git branch -v</code></pre>
+<blockquote>
+<p>注意：Git 的初始化仓库必须至少 <code>commot</code> 过一次才会真正创建 <code>master</code>分支，所以以上 <code>git init</code> 之后需要先随便提交一次，比如， <code>git add README.md &amp;&amp; git commit -m "first commit"</code>，否则会报错</p>
+</blockquote>
+<p>与 Github 仓库建立连接，仅首次</p>
+<pre class=" language-sh"><code class="language-sh">git remote add origin https://github.com/atomicoo/atomicoo.github.io</code></pre>
+<p>提交源码至本地 Git 仓库的 <code>source</code> 分支</p>
+<pre class=" language-sh"><code class="language-sh">git checkout source
+git add -A
+git commit -m "commit message"</code></pre>
+<p>将源码推送至远方 Github 仓库的  <code>source</code> 分支</p>
+<pre class=" language-sh"><code class="language-sh">git push origin source</code></pre>
+<p>此处需要输入 Github 用户名和密码</p>
+<blockquote>
+<p>注意：为了避免我们所使用的 Hexo 主题相关仓库的变动导致我们的站点出问题，我们可以自行 Fork 相关仓库然后作为子库调用。这里使用了 <code>git-submodule</code>，参考 <a href="https://git-scm.com/docs/git-submodule" target="_blank" rel="noopener">Docs of Git Submodule</a></p>
+</blockquote>
+<pre class=" language-sh"><code class="language-sh"># git submodule add <远程仓库> <本地路径>
+git submodule add -b master https://github.com/atomicoo/hexo-theme-yun.git themes/yun</code></pre>
+<h4 id="自动部署"><a href="#自动部署" class="headerlink" title="自动部署"></a>自动部署</h4><p>如果每次修改都需要人工进行部署的话其实是非常麻烦的，此时我们就可以考虑使用持续集成进行自动部署，比较常用的是 <a href="https://help.github.com/en/actions/getting-started-with-github-actions/about-github-actions" target="_blank" rel="noopener">Github Actions</a>，<a href="https://www.netlify.com/" target="_blank" rel="noopener">Netlify</a>，<a href="https://travis-ci.org/" target="_blank" rel="noopener">Travis CI</a></p>
+<p>具体方案及部署步骤请参考 <a href="https://blog.ichr.me/post/automated-deployment-of-serverless-static-blog/" target="_blank" rel="noopener">初探无后端静态博客自动化部署方案</a> 或者 Hexo 官方文档 <a href="https://hexo.io/zh-cn/docs/github-pages" target="_blank" rel="noopener">将 Hexo 部署到 GitHub Pages</a></p>
+<p>若选择使用 Github Actions，可参考我的自动部署脚本 <a href="https://github.com/atomicoo/atomicoo.github.io/blob/source/.github/workflows/gh-pages.yml" target="_blank" rel="noopener">gh-pages.yml</a></p>
+<p>对应的 Github 项目 <code>&lt;username&gt;.github.io</code> 的 <code>Actions</code> 中可查看自动部署的历史情况</p>
+<p><img src="https://i.loli.net/2020/06/26/wuy1atskNe4HbZx.png" alt="1593085858921.png" loading="lazy"></p>
+<p>至此，个人博客网站基本搭建完成，接下来根据自己的需求与喜好持续完善即可。</p>
+<h2 id="写作"><a href="#写作" class="headerlink" title="写作"></a>写作</h2><h3 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h3><p>新建博客 <code>&lt;title&gt;.md</code></p>
+<pre class=" language-sh"><code class="language-sh">hexo new [layout] [title]</code></pre>
+<blockquote>
+<p>.md 是 Markdown 文档的后缀名，对 Markdown 的简单的了解见 <a href="#">Markdown 基本语法</a> 和 <a href="#">Markdown 样式示例</a></p>
+</blockquote>
+<h4 id="布局（Layout）"><a href="#布局（Layout）" class="headerlink" title="布局（Layout）"></a>布局（Layout）</h4><table>
+<thead>
+<tr>
+<th>布局</th>
+<th>路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>post</td>
+<td>source/_posts</td>
+</tr>
+<tr>
+<td>page</td>
+<td>source</td>
+</tr>
+<tr>
+<td>draft</td>
+<td>source/_drafts</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>如果你不想你的文章被处理，你可以将 Front-Matter 中的<code>layout:</code> 设为 <code>false</code> </p>
+</blockquote>
+<h4 id="文件名称"><a href="#文件名称" class="headerlink" title="文件名称"></a>文件名称</h4><table>
+<thead>
+<tr>
+<th align="left">变量</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>:title</code></td>
+<td align="left">标题（小写，空格会替换为短杠）</td>
+</tr>
+<tr>
+<td align="left"><code>:year</code></td>
+<td align="left">建立的年份</td>
+</tr>
+<tr>
+<td align="left"><code>:month</code></td>
+<td align="left">建立的月份（有前导零）</td>
+</tr>
+<tr>
+<td align="left"><code>:i_month</code></td>
+<td align="left">建立的月份（无前导零）</td>
+</tr>
+<tr>
+<td align="left"><code>:day</code></td>
+<td align="left">建立的日期（有前导零）</td>
+</tr>
+<tr>
+<td align="left"><code>:i_day</code></td>
+<td align="left">建立的日期（无前导零）</td>
+</tr>
+</tbody></table>
+<h4 id="草稿（Draft）"><a href="#草稿（Draft）" class="headerlink" title="草稿（Draft）"></a>草稿（Draft）</h4><p><code>Draft</code> 是 Hexo 的一种特殊布局，会被保存到 <code>source/_drafts</code> 中，通过 <code>pubilsh</code> 可以将其移动到 <code>source/_posts</code></p>
+<pre class=" language-sh"><code class="language-sh">hexo publish [layout] [title]</code></pre>
+<h4 id="模板（Scaffold）"><a href="#模板（Scaffold）" class="headerlink" title="模板（Scaffold）"></a><span id="scaffold">模板（Scaffold）</span></h4><p>新建文章时，Hexo 会根据 <code>scaffolds</code> 文件夹中对应的文件来建立文件。模板中可使用的变量如下</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>layout</code></td>
+<td align="left">布局</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left">标题</td>
+<td align="left">文章的文件名</td>
+</tr>
+<tr>
+<td align="left"><code>date</code></td>
+<td align="left">建立日期</td>
+<td align="left">文件建立日期</td>
+</tr>
+<tr>
+<td align="left"><code>updated</code></td>
+<td align="left">更新日期</td>
+<td align="left">文件更新日期</td>
+</tr>
+<tr>
+<td align="left"><code>comments</code></td>
+<td align="left">开启文章的评论功能</td>
+<td align="left">true</td>
+</tr>
+<tr>
+<td align="left"><code>tags</code></td>
+<td align="left">标签（不适用于分页）</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>categories</code></td>
+<td align="left">分类（不适用于分页）</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>permalink</code></td>
+<td align="left">覆盖文章网址</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>keywords</code></td>
+<td align="left">仅用于 meta 标签和 Open Graph 的关键词（不推荐使用）</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h3 id="Front-matter"><a href="#Front-matter" class="headerlink" title="Front-matter"></a>Front-matter</h3><p>Front-matter 是文件最上方以 <code>---</code> 分隔的区域，用于指定个别文件的变量，例如</p>
+<pre class=" language-sh"><code class="language-sh">---
+title: Hello World
+date: 2013/7/13 20:46:25
+---</code></pre>
+<p>预定义变量详见 <a href="#scaffold">模板（Scaffold）</a></p>
+<h4 id="分类和标签"><a href="#分类和标签" class="headerlink" title="分类和标签"></a>分类和标签</h4><pre class=" language-sh"><code class="language-sh">categories:
+- Diary
+tags:
+- PlayStation
+- Games</code></pre>
+<blockquote>
+<p>注意：同级多分类</p>
+</blockquote>
+<pre class=" language-sh"><code class="language-sh">categories:
+- [Diary, PlayStation]
+- [Diary, Games]</code></pre>
+<h3 id="标签插件"><a href="#标签插件" class="headerlink" title="标签插件"></a>标签插件</h3><p>标签插件用于在文章中快速插入特定内容的插件</p>
+<h4 id="引用块"><a href="#引用块" class="headerlink" title="引用块"></a>引用块</h4><p>别名：quote</p>
+<pre class=" language-sh"><code class="language-sh">{% blockquote [author[, source]] [link] [source_link_title] %}
+content
+{% endblockquote %}</code></pre>
+<h4 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h4><p>别名：code</p>
+<pre class=" language-sh"><code class="language-sh">{% codeblock [title] [lang:language] [url] [link text] [additional options] %}
+code snippet
+{% endcodeblock %}</code></pre>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a><span id="others-tag">其他</span></h4><pre class=" language-sh"><code class="language-sh"># iframe
+{% iframe url [width] [height] %}
+
+# image
+{% img [class names] /path/to/image [width] [height] '"title text" "alt text"' %}
+
+# link
+{% link text url [external] [title] %}
+
+# include code
+{% include_code [title] [lang:language] [from:line] [to:line] path/to/file %}
+
+# youtube
+{% youtube video_id %}
+
+# 引用文章链接
+{% post_link filename [title] %}
+
+# 引用文章资源
+{% asset_link filename [title] %}</code></pre>
+<h4 id="文章摘要和截断"><a href="#文章摘要和截断" class="headerlink" title="文章摘要和截断"></a>文章摘要和截断</h4><p>在文章中使用 <code>&lt;!-- more --&gt;</code>，那么 <code>&lt;!-- more --&gt;</code> 之前的文字将会被视为摘要。首页中将只出现这部分文字，同时这部分文字也会出现在正文之中</p>
+<h3 id="资源文件夹"><a href="#资源文件夹" class="headerlink" title="资源文件夹"></a>资源文件夹</h3><p>资源（Asset）表示除了文章外的其他文件，例如图片、JS、CSS 等。当资源文件较少时，可以直接放在同一个文件夹下，例如图片文件统一放在 <code>source/images</code> 中，但当资源文件较多时这显然不是一个合适的解决方案。Hexo 提供了更组织化的方式来管理资源文件，通过 设置 <code>_config.yml</code> 中的 <code>post_asset_folder</code> 为 <code>true</code> 即可开启。开启该功能后，每次新建文章时 Hexo 都会自动创建一个相应的同名文件夹用以存放文章的资源文件，引用时按照 <a href="#others-tag">其他</a> 中的 <code>引用文章资源</code> 方式即可</p>
+<h3 id="数据文件夹"><a href="#数据文件夹" class="headerlink" title="数据文件夹"></a>数据文件夹</h3><p>这部分我用的比较少，暂略。此处插眼 <a href="https://hexo.io/zh-cn/docs/data-files" target="_blank" rel="noopener">Hexo 文档 | 数据文件夹</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo 官方文档</a></p>
+<p><a href="https://hexo.io/zh-cn/api/" target="_blank" rel="noopener">Hexo 官方 API 信息</a></p>
+<p><a href="https://www.yunyoujun.cn/share/how-to-build-your-site/" target="_blank" rel="noopener">教你如何从零开始搭建一个属于自己的网站</a></p>
+<p><a href="https://yun.yunyoujun.cn/guide/" target="_blank" rel="noopener">Hexo-Theme-Yun 使用指南</a></p>
+<p><a href="https://segmentfault.com/a/1190000018803949" target="_blank" rel="noopener">Hexo+Next 集成 Algolia 搜索</a></p>
+<!-- Q.E.D. -->
+
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script></div><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">此路是我开，留下买路财 [ 狗头 ]</div><div id="qr" style="display:none;"><div style="display:inline-block"><a href="/images/alipay.jpg"><img loading="lazy" src="/images/alipay.jpg" alt="支付宝" title="支付宝"></a><div><span style="color:#00A3EE"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-alipay-line"></use></svg></span></div></div><div style="display:inline-block"><a href="/images/qq-pay.jpg"><img loading="lazy" src="/images/qq-pay.jpg" alt="QQ 支付" title="QQ 支付"></a><div><span style="color:#12B7F5"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-qq-line"></use></svg></span></div></div><div style="display:inline-block"><a href="/images/wechat-pay.jpg"><img loading="lazy" src="/images/wechat-pay.jpg" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-wechat-pay-line"></use></svg></span></div></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>原子态</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://atomicoo.com/everything/how-to-build-your-site/" title="建立你自己的个人静态网站">https://atomicoo.com/everything/how-to-build-your-site/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></section></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/info-science/pytorch-auto-diff-autograd/" rel="prev" title="PyTorch 自动微分：Autograd"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">PyTorch 自动微分：Autograd</span></a></div><div class="post-nav-item"></div></div></div><div id="comment"><div class="comment-tooltip text-center"><span>重要评论建议跳转 GitHub Issues 发布</span><br><span>每篇文章的首个评论需要先根据 Comment 模板创建相应的 Issue</span><br><span>请避免创建重复的 Issue，感谢配合</span><br><a class="hty-button hty-button--raised" id="github-issues" href="https://github.com/atomicoo/atomicoo.github.io/issues?q=is:issue+建立你自己的个人静态网站" target="_blank" rel="noopener">GitHub Issues</a></div><div id="valine-container"></div><script src="https://cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script><script>function initValine() {
+  const valineConfig = {"enable":true,"appId":"frjzlYEWNDPLkxagtOz0FWFe-9Nh9j0Va","appKey":"gK2710zgTWTS3C6UchnWhQHd","placeholder":"大佬们缺捡肥皂的吗？_(:з」∠)_","visitor":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"avatar":null,"pageSize":10,"highlight":true,"el":"#valine-container","lang":"zh-cn"}
+  valineConfig.path = window.location.pathname
+  new Valine(valineConfig)
+}
+setTimeout(initValine, 1000)</script></div></main><footer class="sidebar-translate" id="footer"><div class="beian"><a rel="noopener" href="http://www.beian.miit.gov.cn" target="_blank">闽ICP备20015372号</a></div><div class="copyright"><span>&copy; 2020 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> 原子态</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v4.2.1</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v0.9.1</span></div></footer><a class="hty-icon-button" id="goUp" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a><a class="popup-trigger hty-icon-button icon-search" id="search" href="javascript:;" title="搜索"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-search-line"></use></svg></span></a><script>window.addEventListener("DOMContentLoaded", () => {
+  // Handle and trigger popup window
+  document.querySelector(".popup-trigger").addEventListener("click", () => {
+    document.querySelector(".popup").classList.add("show");
+    setTimeout(() => {
+      document.querySelector(".search-input").focus();
+    }, 100);
+  });
+
+  // Monitor main search box
+  const onPopupClose = () => {
+    document.querySelector(".popup").classList.remove("show");
+  };
+
+  document.querySelector(".popup-btn-close").addEventListener("click", () => {
+    onPopupClose();
+  });
+
+  window.addEventListener("keyup", event => {
+    if (event.key === "Escape") {
+      onPopupClose();
+    }
+  });
+});
+</script><script defer src="https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script><script defer src="https://cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script><script defer src="/js/search/algolia-search.js"></script><div class="popup search-popup"><div class="search-header"><span class="popup-btn-close close-icon hty-icon-button"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close-line"></use></svg></span></div><div class="search-input-container"></div><div class="algolia-results"><div id="algolia-stats"></div><div id="algolia-hits"></div><div class="algolia-pagination" id="algolia-pagination"></div></div></div></div><script defer src="/js/utils.js"></script><script defer src="/js/hexo-theme-yun.js"></script></body></html>
