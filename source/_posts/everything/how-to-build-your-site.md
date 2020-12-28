@@ -7,7 +7,7 @@ tags:
   - Hexo
   - 静态网站
 categories:
-  - 一点应用
+  - 杂项
 ---
 
 ## 引言

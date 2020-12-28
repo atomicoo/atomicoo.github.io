@@ -7,7 +7,8 @@ tags:
   - 数学
   - 矩阵求导
 categories:
-  - 一点理论
+  - 数学研究
+  - 信息时代
 katex: true
 ---
 

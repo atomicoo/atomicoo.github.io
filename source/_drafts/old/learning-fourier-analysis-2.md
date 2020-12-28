@@ -6,7 +6,7 @@ tags:
   - 数学
   - 傅里叶分析
 categories:
-  - 一点理论
+  - 数学研究
 katex: true
 ---
 

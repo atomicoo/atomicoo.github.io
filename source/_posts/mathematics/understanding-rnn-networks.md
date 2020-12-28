@@ -8,7 +8,8 @@ tags:
   - LSTM
   - GRU
 categories:
-  - 一点理论
+  - 数学研究
+  - 信息时代
 katex: true
 ---
 

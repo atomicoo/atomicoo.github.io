@@ -7,7 +7,7 @@ tags:
   - 自动微分
   - Autograd
 categories:
-  - 一点技术
+  - 信息时代
 ---
 
 ## 引言
