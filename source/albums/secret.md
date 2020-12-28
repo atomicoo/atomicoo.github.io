@@ -5,7 +5,7 @@ updated: 2020-06-26 12:44:24
 layout: gallery
 gallery_password: secret
 photos:
-  - caption: 秘密
+  - caption: 随机
     src: https://picsum.photos/seed/picsum/800/500
-    desc: 那天，那地，那人 ……
+    desc: 随机图片
 ---
